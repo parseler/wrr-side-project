@@ -1,7 +1,14 @@
 spring:
   profiles:
     include: oauth
-  ## console log 색상
+  # console log 색상
   output:
     ansi:
       enabled: ALWAYS
+
+  jpa:
+    hibernate:
+      ddl-auto: create #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
