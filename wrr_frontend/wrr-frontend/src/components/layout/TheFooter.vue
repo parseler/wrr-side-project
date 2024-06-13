@@ -1,13 +1,12 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-    <div>
-        
-    </div>
+  <div>
+    Logo made by
+    <a href="https://www.designevo.com/" title="Free Online Logo Maker"
+      >DesignEvo free logo creator</a
+    >
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

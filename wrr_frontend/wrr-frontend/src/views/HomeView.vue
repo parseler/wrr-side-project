@@ -17,7 +17,7 @@ const closeDialog = () => {
   <div class="px-6 mx-auto grid place-items-center text-center">
     <div class="mt-10 flex flex-col items-center">
       <img
-        src="/src/assets/logo/wrr.png"
+        src="/src/assets/logo/logo.png"
         alt="WRR Logo"
         style="width: 20%; height: auto"
       />

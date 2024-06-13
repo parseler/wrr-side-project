@@ -2,7 +2,7 @@
 
 <template>
   <nav
-    class="block w-ful full-width max-w-screen-xl px-6 py-3 mx-auto text-black bg-white border shadow-md rounded-xl border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200"
+    class="block w-ful full-width max-w-screen-xl px-6 py-6 mx-auto text-black bg-white border shadow-md rounded-xl border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200"
   >
     <div class="flex items-center justify-between text-blue-gray-900">
       <a
@@ -10,12 +10,12 @@
         class="flex items-center mr-4 cursor-pointer py-1.5 font-mono text-xl font-semibold leading-relaxed tracking-normal text-inherit antialiased"
       >
         <img
-          src="/src/assets/logo/wrr.png"
+          src="/src/assets/logo/logo.png"
           alt="WRR Logo"
-          style="width: 10%; height: auto"
+          style="width: 8%; height: auto"
           class="mr-2"
         />
-        <span>WRR</span>
+        <div>WRR</div>
       </a>
 
       <div class="hidden lg:block">
