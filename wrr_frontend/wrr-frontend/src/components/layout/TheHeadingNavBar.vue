@@ -1,8 +1,12 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const isShown = ref(false);
+</script>
 
 <template>
   <nav
-    class="block w-ful full-width max-w-screen-xl px-6 py-6 mx-auto text-black bg-white border shadow-md rounded-xl border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200"
+    class="block w-ful full-width max-w-screen px-6 py-6 mx-auto text-black bg-white border shadow-md rounded-xl border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200"
   >
     <div class="flex items-center justify-between text-blue-gray-900">
       <a
@@ -12,24 +16,25 @@
         <img
           src="/src/assets/logo/logo.png"
           alt="WRR Logo"
-          style="width: 8%; height: auto"
+          style="width: 50px; height: auto"
           class="mr-2"
         />
         <div>WRR</div>
       </a>
 
-      <div class="hidden lg:block">
+      <div class="lg:flex lg:items-center lg:gap-6">
         <ul
           class="flex flex-col gap-2 my-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6"
+          v-show="isShown"
         >
           <li
             class="block p-1 font-mono text-sm antialiased font-medium leading-normal text-blue-gray-900"
           >
             <a
               href="#"
-              class="flex items-center transition-colors hover:text-blue-500"
+              class="flex items-center transition-colors hover:text-logo-500"
             >
-              Pages
+              Likes
             </a>
           </li>
           <li
@@ -37,9 +42,9 @@
           >
             <a
               href="#"
-              class="flex items-center transition-colors hover:text-blue-500"
+              class="flex items-center transition-colors hover:text-logo-500"
             >
-              Account
+              Matching
             </a>
           </li>
           <li
@@ -47,47 +52,48 @@
           >
             <a
               href="#"
-              class="flex items-center transition-colors hover:text-blue-500"
+              class="flex items-center transition-colors hover:text-logo-500"
             >
-              Blocks
+              WOD
             </a>
           </li>
           <li
-            class="block p-1 font-mono text-sm antialiased font-medium leading-normal text-blue-gray-900"
+            class="block p-1 font-mono text-sm antialiased font-medium leading-normal text-logo-gray-900"
           >
             <a
               href="#"
-              class="flex items-center transition-colors hover:text-blue-500"
+              class="flex items-center transition-colors hover:text-logo-500"
             >
-              Docs
+              About
             </a>
           </li>
         </ul>
-      </div>
-      <button
-        class="relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle font-mono text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden"
-        type="button"
-      >
-        <span
-          class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+        <button
+          class="relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle font-mono text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          type="button"
+          @click="isShown = !isShown"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            aria-hidden="true"
-            class="w-6 h-6"
+          <span
+            class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            ></path>
-          </svg>
-        </span>
-      </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              aria-hidden="true"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              ></path>
+            </svg>
+          </span>
+        </button>
+      </div>
     </div>
   </nav>
 </template>
