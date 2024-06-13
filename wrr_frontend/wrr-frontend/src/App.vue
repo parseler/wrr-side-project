@@ -1,19 +1,25 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import TheHeadingNavBar from './components/layout/TheHeadingNavBar.vue';
+import TheFooter from './components/layout/TheFooter.vue'
 </script>
 
 <template>
   <header>
-
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <a href="http://localhost:8080/oauth2/authorization/google">Login with Google</a>
-      </nav>
+    <div>
+      <TheHeadingNavBar/>
     </div>
   </header>
-
-  <RouterView />
+  <main>
+    <div>
+      <router-view></router-view>
+    </div>
+  </main>
+  <footer>
+    <div>
+      <TheFooter/>
+    </div>
+  </footer>
 </template>
 
 <style scoped>
