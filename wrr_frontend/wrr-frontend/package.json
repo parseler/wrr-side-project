@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@growthbunker/vuesocial": "^0.1.2",
     "@material-tailwind/html": "^2.2.2",
     "pinia": "^2.1.7",
+    "social-login-buttons": "^0.0.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

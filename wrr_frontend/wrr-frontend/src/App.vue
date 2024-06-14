@@ -9,7 +9,7 @@ import TheFooter from "./components/layout/TheFooter.vue";
       <TheHeadingNavBar />
   </header>
   <main>
-    <div class="bg-back">
+    <div class="bg-back h-full">
       <router-view></router-view>
     </div>
   </main>
