@@ -1,26 +1,26 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import TheHeadingNavBar from './components/layout/TheHeadingNavBar.vue';
-import TheFooter from './components/layout/TheFooter.vue'
+import { RouterLink, RouterView } from "vue-router";
+import TheHeadingNavBar from "./components/layout/TheHeadingNavBar.vue";
+import TheFooter from "./components/layout/TheFooter.vue";
 </script>
 
 <template>
   <header>
-    <div>
-      <TheHeadingNavBar/>
-    </div>
+      <TheHeadingNavBar />
   </header>
   <main>
-    <div>
+    <div class="bg-back">
       <router-view></router-view>
     </div>
   </main>
-  <footer>
-    <div>
-      <TheFooter/>
-    </div>
+  <footer class="footer">
+      <TheFooter />
   </footer>
 </template>
 
-<style scoped>
+<style>
+.footer {
+  width: 100%;
+  height: 10%;
+}
 </style>

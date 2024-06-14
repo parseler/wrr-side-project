@@ -8,8 +8,9 @@ export default {
     extend: {
       colors: {
         logo: {
-          500: "#f44336"
-        }
+          500: "#FF7F3E"
+        },
+        back: "#003285"
       },
     },
   },

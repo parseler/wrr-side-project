@@ -14,17 +14,17 @@ const closeDialog = () => {
 };
 </script>
 <template>
-  <div class="px-6 mx-auto grid place-items-center text-center">
+  <div class="px-6 mx-auto grid place-items-center text-center text-white">
     <div class="mt-10 flex flex-col items-center">
       <img
-        src="/src/assets/logo/logo.png"
+        src="/src/assets/logo/WRR.png"
         alt="WRR Logo"
-        style="width: 20%; height: auto"
+        style="width: 50%; height: auto"
       />
       <h1
         class="block antialiased tracking-normal font-mono text-5xl font-bold leading-tight text-blue-gray-900 mt-7 !text-2xl md:text-3xl max-w-xl mx-auto !leading-snug"
       >
-        We're currently undergoing maintenance to improve your experience.
+        Start with Crossfit WOD Generator!!!
       </h1>
       <p
         class="block antialiased font-mono text-base font-light leading-relaxed text-inherit !mt-4 md:max-w-2xl text-[18px] font-normal text-gray-500"
@@ -88,84 +88,6 @@ const closeDialog = () => {
         <div
           class="relative overflow-y-scroll p-4 !px-5 font-sans text-base font-light leading-relaxed text-blue-gray-500 antialiased"
         >
-          <div class="mb-6">
-            <p
-              class="block py-3 font-sans text-base antialiased font-semibold leading-relaxed uppercase text-blue-gray-900 opacity-70"
-            >
-              Popular
-            </p>
-            <ul class="flex flex-col gap-1 mt-3 -ml-2">
-              <button
-                role="menuitem"
-                class="mb-4 flex w-full cursor-pointer select-none items-center justify-center gap-3 rounded-md px-3 !py-4 pt-[9px] pb-2 text-start leading-tight shadow-md outline-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
-              >
-                <img
-                  src="https://docs.material-tailwind.com/icons/metamask.svg"
-                  alt="metamask"
-                  class="w-6 h-6"
-                />
-                <h6
-                  class="block font-sans text-base antialiased font-semibold leading-relaxed tracking-normal uppercase text-blue-gray-900"
-                >
-                  Connect with MetaMask
-                </h6>
-              </button>
-              <button
-                role="menuitem"
-                class="mb-1 flex w-full cursor-pointer select-none items-center justify-center gap-3 rounded-md px-3 !py-4 pt-[9px] pb-2 text-start leading-tight shadow-md outline-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
-              >
-                <img
-                  src="https://docs.material-tailwind.com/icons/coinbase.svg"
-                  alt="coinbase"
-                  class="w-6 h-6 rounded-md"
-                />
-                <h6
-                  class="block font-sans text-base antialiased font-semibold leading-relaxed tracking-normal uppercase text-blue-gray-900"
-                >
-                  Connect with Coinbase
-                </h6>
-              </button>
-            </ul>
-          </div>
-          <div>
-            <p
-              class="block py-4 font-sans text-base antialiased font-semibold leading-relaxed uppercase text-blue-gray-900 opacity-70"
-            >
-              Other
-            </p>
-            <ul class="mt-4 -ml-2.5 flex flex-col gap-1">
-              <button
-                role="menuitem"
-                class="mb-4 flex w-full cursor-pointer select-none items-center justify-center gap-3 rounded-md px-3 !py-4 pt-[9px] pb-2 text-start leading-tight shadow-md outline-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
-              >
-                <img
-                  src="https://docs.material-tailwind.com/icons/trust-wallet.svg"
-                  alt="trust-wallet"
-                  class="border rounded-md h-7 w-7 border-blue-gray-50"
-                />
-                <h6
-                  class="block font-sans text-base antialiased font-semibold leading-relaxed tracking-normal uppercase text-blue-gray-900"
-                >
-                  Connect with Trust Wallet
-                </h6>
-              </button>
-            </ul>
-          </div>
-        </div>
-        <div
-          class="flex flex-wrap items-center justify-between gap-2 p-4 shrink-0 text-blue-gray-500"
-        >
-          <p
-            class="block font-sans text-sm antialiased font-normal leading-normal text-gray-700"
-          >
-            New to Ethereum wallets?
-          </p>
-          <button
-            class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-          >
-            Learn More
-          </button>
         </div>
       </div>
     </div>
