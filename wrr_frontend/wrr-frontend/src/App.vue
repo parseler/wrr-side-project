@@ -5,22 +5,26 @@ import TheFooter from "./components/layout/TheFooter.vue";
 </script>
 
 <template>
-  <header>
+  <div class="bg-back h-screen">
+    <header>
       <TheHeadingNavBar />
-  </header>
-  <main>
-    <div class="bg-back h-full">
-      <router-view></router-view>
-    </div>
-  </main>
-  <footer class="footer">
+    </header>
+    <main>
+      <div>
+        <router-view></router-view>
+      </div>
+    </main>
+    <footer class="footer">
       <TheFooter />
-  </footer>
+    </footer>
+  </div>
 </template>
 
 <style>
 .footer {
   width: 100%;
-  height: 10%;
+  height: 95px;
+  bottom: 0;
+  position: fixed;
 }
 </style>

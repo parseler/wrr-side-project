@@ -19,7 +19,7 @@ const isShown = ref(false);
         <img
           src="/src/assets/logo/WRR.png"
           alt="WRR Logo"
-          style="width: 50px; height: auto"
+          style="width: 45px; height: auto"
           class="mr-2"
         />
       </RouterLink>
@@ -30,7 +30,7 @@ const isShown = ref(false);
           v-show="isShown"
         >
           <li
-            class="block p-1 font-mono text-sm antialiased font-medium leading-normal text-blue-gray-900"
+            class="block p-1 font-mono antialiased font-medium leading-normal text-blue-gray-900"
           >
             <a
               href="#"
@@ -40,7 +40,7 @@ const isShown = ref(false);
             </a>
           </li>
           <li
-            class="block p-1 font-mono text-sm antialiased font-medium leading-normal text-blue-gray-900"
+            class="block p-1 font-mono antialiased font-medium leading-normal text-blue-gray-900"
           >
             <a
               href="#"
@@ -50,7 +50,7 @@ const isShown = ref(false);
             </a>
           </li>
           <li
-            class="block p-1 font-mono text-sm antialiased font-medium leading-normal text-blue-gray-900"
+            class="block p-1 font-mono antialiased font-medium leading-normal text-blue-gray-900"
           >
             <a
               href="#"

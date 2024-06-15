@@ -15,41 +15,44 @@ const closeDialog = () => {
 
 const googleLogin = () => {
   // 연결하기
-}
+};
+
+const guestLogin = () => {};
 </script>
 <template>
-  <div class="px-6 mx-auto grid place-items-center text-center text-white">
+  <div class="flex items-center justify-center px-6 text-center text-white">
     <div class="mt-10 flex flex-col items-center">
       <img
         src="/src/assets/logo/WRR.png"
         alt="WRR Logo"
-        style="width: 50%; height: auto"
+        style="width: 40%; height: auto"
       />
       <h1
-        class="block antialiased tracking-normal font-mono text-5xl font-bold leading-tight text-blue-gray-900 mt-7 !text-2xl md:text-3xl max-w-xl mx-auto !leading-snug"
+        class="block antialiased tracking-normal font-mono text-5xl font-bold leading-tight text-blue-gray-900 mt-3 !text-2xl md:text-3xl max-w-xl mx-auto !leading-snug"
       >
         Start with Crossfit WOD Generator!!!
       </h1>
-      <p
-        class="block antialiased font-mono text-base font-light leading-relaxed text-inherit !mt-4 md:max-w-2xl text-[18px] font-normal text-gray-500"
-      >
-        Please bear with us while we make these enhancements. We'll be back
-        shortly. Thank you for your patience!
-      </p>
       <button
-        class="mt-3 select-none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-mono text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="mt-6 select-none rounded-lg bg-gray-900 py-3 px-12 text-center align-middle font-mono text-xl font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button"
         @click="openDialog"
       >
         Sign in
       </button>
+      <p
+        class="cursor-pointer hover:text-logo-500 block antialiased font-mono text-base leading-relaxed text-inherit !mt-4 md:max-w-2xl text-[18px] font-normal text-gray-500 text-decoration-line: underline"
+        @click="guestLogin"
+      >
+        Continue as Guest
+      </p>
     </div>
+    <!-- login modal -->
     <div
       ref="dialogBackdrop"
       class="pointer-events-none fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-0 backdrop-blur-sm transition-opacity duration-300"
     >
       <div
-        class="relative m-4 w-1/4 min-w-[25%] max-w-[25%] rounded-lg bg-white font-mono text-base text-black leading-relaxed text-blue-gray-500 antialiased shadow-2xl"
+        class="relative m-4 w-full max-w-md min-w-[300px] rounded-lg bg-white font-mono text-base text-black leading-relaxed text-blue-gray-500 antialiased shadow-2xl"
       >
         <div
           class="flex items-center justify-between p-4 font-mono text-2xl antialiased font-semibold leading-snug shrink-0 text-blue-gray-900"
@@ -96,7 +99,7 @@ const googleLogin = () => {
               >
                 <img
                   src="/src/assets/social-login/google.svg"
-                  alt="metamast"
+                  alt="google"
                   class="w-6 h-6"
                 />
                 <h6
@@ -111,7 +114,7 @@ const googleLogin = () => {
               >
                 <img
                   src="/src/assets/social-login/discord.svg"
-                  alt="metamast"
+                  alt="discord"
                   class="w-6 h-6 rounded-md"
                 />
                 <h6
@@ -126,7 +129,7 @@ const googleLogin = () => {
               >
                 <img
                   src="/src/assets/social-login/facebook.svg"
-                  alt="metamast"
+                  alt="facebook"
                   class="w-6 h-6 rounded-md"
                 />
                 <h6
