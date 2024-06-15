@@ -14,7 +14,7 @@ const closeDialog = () => {
 };
 
 const googleLogin = () => {
-  // 연결하기
+  window.location.href = 'http://localhost:8080/oauth2/authorization/google';
 };
 
 const guestLogin = () => {};
