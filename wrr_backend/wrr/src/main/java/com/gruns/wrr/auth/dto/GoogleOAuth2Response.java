@@ -1,5 +1,7 @@
 package com.gruns.wrr.auth.dto;
 
+import com.gruns.wrr.auth.util.OAuth2Provider;
+
 import java.util.Map;
 
 public class GoogleOAuth2Response implements OAuth2Response {
