@@ -15,16 +15,22 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-    @Column(nullable = false, unique = true)
+
     private String email;
+
     @Column(name = "profile_image_url")
     private String profileImageUrl;
-    @Column(nullable = false, unique = true)
-    private String name;
+
+    @Column(nullable = false)
+    private String name; // nickname
+
     private String role;
+
     @Column(name = "created_date")
     private LocalDate createdDate;
-    private String username;
+
+    @Column(unique = true)
+    private String username; // providerName + providerId
 
     public UserEntity() {
     }
