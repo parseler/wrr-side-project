@@ -1,4 +1,4 @@
-package com.gruns.wrr.auth.dto;
+package com.gruns.wrr.auth.util;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
