@@ -1,4 +1,5 @@
 <script setup>
+import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
 
 const dialogBackdrop = ref(null);
@@ -13,8 +14,11 @@ const closeDialog = () => {
   dialogBackdrop.value.classList.add("pointer-events-none", "opacity-0");
 };
 
-const googleLogin = () => {
-  window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+const userStore = useUserStore();
+const { oauth2Login } = userStore;
+
+const clickLogin = (provider) => {
+  window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
 };
 
 const guestLogin = () => {};
@@ -95,7 +99,7 @@ const guestLogin = () => {};
               <button
                 role="menuitem"
                 class="mb-4 flex w-full cursor-pointer select-none items-center justify-center gap-3 rounded-md px-3 !py-4 pt-[9px] pb-2 text-start leading-tight shadow-md outline-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
-                @click="googleLogin"
+                @click="clickLogin(`google`)"
               >
                 <img
                   src="/src/assets/social-login/google.svg"

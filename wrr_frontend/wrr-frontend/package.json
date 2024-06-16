@@ -11,6 +11,8 @@
   "dependencies": {
     "@growthbunker/vuesocial": "^0.1.2",
     "@material-tailwind/html": "^2.2.2",
+    "axios": "^1.7.2",
+    "jwt-decode": "^4.0.0",
     "pinia": "^2.1.7",
     "social-login-buttons": "^0.0.4",
     "vue": "^3.4.21",

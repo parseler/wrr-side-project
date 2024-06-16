@@ -46,7 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String category = jwtUtil.getCategory(accessToken);
-        if (!category.equals("access")) {
+        if (!"access".equals(category)) {
             PrintWriter writer = response.getWriter();
             writer.print("invalid access token");
 
@@ -57,7 +57,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = jwtUtil.getUsername(accessToken);
         String role = jwtUtil.getRole(accessToken);
 
-        log.debug("access token : {}", accessToken);
+        log.debug("JwtFilter access token : {}", accessToken);
 
         UserDto userDto = new UserDto();
         userDto.setUsername(username);
