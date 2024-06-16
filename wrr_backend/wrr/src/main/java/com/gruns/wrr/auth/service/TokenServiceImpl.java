@@ -27,6 +27,7 @@ public class TokenServiceImpl implements TokenService {
 
         return cookie;
     }
+
     @Override
     public void addRefreshTokenEntity(String username, String token, Long expiredMs) {
 
@@ -35,5 +36,25 @@ public class TokenServiceImpl implements TokenService {
         RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity(username, token, date.toString());
 
         refreshTokenRepository.save(refreshTokenEntity);
+    }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return refreshTokenRepository.existsByUsername(username);
+    }
+
+    @Override
+    public void deleteByUsername(String username) {
+        refreshTokenRepository.deleteByUsername(username);
+    }
+
+    @Override
+    public Boolean existsByToken(String token) {
+        return refreshTokenRepository.existsByToken(token);
+    }
+
+    @Override
+    public void deleteByToken(String token) {
+        refreshTokenRepository.deleteByToken(token);
     }
 }

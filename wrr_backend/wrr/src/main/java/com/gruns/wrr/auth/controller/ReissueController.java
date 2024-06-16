@@ -1,6 +1,5 @@
 package com.gruns.wrr.auth.controller;
 
-import com.gruns.wrr.auth.repository.RefreshTokenRepository;
 import com.gruns.wrr.auth.service.TokenService;
 import com.gruns.wrr.auth.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -9,18 +8,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/auth")
 public class ReissueController {
 
     private final JwtUtil jwtUtil;
-    private final RefreshTokenRepository refreshTokenRepository;
     private final TokenService tokenService;
 
-    public ReissueController(JwtUtil jwtUtil, RefreshTokenRepository refreshTokenRepository, TokenService tokenService) {
+    public ReissueController(JwtUtil jwtUtil, TokenService tokenService) {
         this.jwtUtil = jwtUtil;
-        this.refreshTokenRepository = refreshTokenRepository;
         this.tokenService = tokenService;
     }
 
@@ -52,7 +51,7 @@ public class ReissueController {
             return ResponseEntity.badRequest().body("invalid refresh token");
         }
 
-        Boolean isExisted = refreshTokenRepository.existsByToken(refreshToken);
+        Boolean isExisted = tokenService.existsByToken(refreshToken);
         if (!isExisted) {
             return ResponseEntity.badRequest().body("invalid refresh token");
         }
@@ -63,7 +62,7 @@ public class ReissueController {
         String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 10 * 1000L);
         String reissuedRefreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 60 * 1000L);
 
-        refreshTokenRepository.deleteByToken(refreshToken);
+        tokenService.deleteByToken(refreshToken);
         tokenService.addRefreshTokenEntity(username, reissuedRefreshToken, 60 * 60 * 1000L);
 
         response.setHeader("accessToken", reissuedAccessToken);
