@@ -1,10 +1,9 @@
 package com.gruns.wrr.auth.util;
 
 import com.gruns.wrr.auth.dto.CustomOAuth2User;
-import com.gruns.wrr.auth.entity.RefreshTokenEntity;
 import com.gruns.wrr.auth.repository.RefreshTokenRepository;
+import com.gruns.wrr.auth.service.TokenService;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 
 @Component
@@ -22,10 +20,12 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private final JwtUtil jwtUtil;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final TokenService tokenService;
 
-    public CustomAuthenticationSuccessHandler(JwtUtil jwtUtil, RefreshTokenRepository refreshTokenRepository) {
+    public CustomAuthenticationSuccessHandler(JwtUtil jwtUtil, RefreshTokenRepository refreshTokenRepository, TokenService tokenService) {
         this.jwtUtil = jwtUtil;
         this.refreshTokenRepository = refreshTokenRepository;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -40,36 +40,16 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String role = auth.getAuthority();
 
         String accessToken = jwtUtil.createJwt("access", username, role, 60 * 10 * 1000L);
-        String refreshToken = jwtUtil.createJwt("refresh", username, role, 24 * 60 * 60 * 1000L);
+        String refreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 60 * 1000L);
 
         Boolean isExisted = refreshTokenRepository.existsByUsername(username);
         if (isExisted) {
             refreshTokenRepository.deleteByUsername(username);
         }
-        addRefreshTokenEntity(username, refreshToken, 24 * 60 * 60 * 1000L);
+        tokenService.addRefreshTokenEntity(username, refreshToken, 60 * 60 * 1000L);
 
         response.setHeader("accessToken", accessToken);
-        response.addCookie(createCookie("refreshToken", refreshToken));
+        response.addCookie(tokenService.createCookie("refreshToken", refreshToken));
         response.sendRedirect("http://localhost:5173/");
-    }
-
-    private Cookie createCookie(String key, String value) {
-
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(24*60*60);
-        //cookie.setSecure(true); https 에서만 허용
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-
-        return cookie;
-    }
-
-    private void addRefreshTokenEntity(String username, String token, Long expiredMs) {
-
-        Date date = new Date(System.currentTimeMillis() + expiredMs);
-
-        RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity(username, token, date.toString());
-
-        refreshTokenRepository.save(refreshTokenEntity);
     }
 }
