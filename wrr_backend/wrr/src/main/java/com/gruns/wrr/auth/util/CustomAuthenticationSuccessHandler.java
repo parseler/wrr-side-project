@@ -1,6 +1,8 @@
 package com.gruns.wrr.auth.util;
 
 import com.gruns.wrr.auth.dto.CustomOAuth2User;
+import com.gruns.wrr.auth.entity.RefreshTokenEntity;
+import com.gruns.wrr.auth.repository.RefreshTokenRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,14 +14,18 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 @Component
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    private final JwtUtil jwtUtil;
 
-    public CustomAuthenticationSuccessHandler(JwtUtil jwtUtil) {
+    private final JwtUtil jwtUtil;
+    private final RefreshTokenRepository refreshTokenRepository;
+
+    public CustomAuthenticationSuccessHandler(JwtUtil jwtUtil, RefreshTokenRepository refreshTokenRepository) {
         this.jwtUtil = jwtUtil;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     @Override
@@ -33,8 +39,14 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String accessToken = jwtUtil.createJwt("access", username, role, 600000L);
-        String refreshToken = jwtUtil.createJwt("refresh", username, role, 86400000L);
+        String accessToken = jwtUtil.createJwt("access", username, role, 60 * 10 * 1000L);
+        String refreshToken = jwtUtil.createJwt("refresh", username, role, 24 * 60 * 60 * 1000L);
+
+        Boolean isExisted = refreshTokenRepository.existsByUsername(username);
+        if (isExisted) {
+            refreshTokenRepository.deleteByUsername(username);
+        }
+        addRefreshTokenEntity(username, refreshToken, 24 * 60 * 60 * 1000L);
 
         response.setHeader("accessToken", accessToken);
         response.addCookie(createCookie("refreshToken", refreshToken));
@@ -50,5 +62,14 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         cookie.setHttpOnly(true);
 
         return cookie;
+    }
+
+    private void addRefreshTokenEntity(String username, String token, Long expiredMs) {
+
+        Date date = new Date(System.currentTimeMillis() + expiredMs);
+
+        RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity(username, token, date.toString());
+
+        refreshTokenRepository.save(refreshTokenEntity);
     }
 }

@@ -2,12 +2,15 @@ package com.gruns.wrr.config;
 
 import com.gruns.wrr.auth.service.CustomOAuth2UserService;
 import com.gruns.wrr.auth.util.CustomAuthenticationSuccessHandler;
+import com.gruns.wrr.auth.util.JwtFilter;
+import com.gruns.wrr.auth.util.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -16,11 +19,14 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final JwtUtil jwtUtil;
 
     public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-                          CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+                          CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+                          JwtUtil jwtUtil) {
         this.customOAuth2UserService = customOAuth2UserService;
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        this.jwtUtil = jwtUtil;
     }
 
     @Bean
@@ -39,7 +45,8 @@ public class SecurityConfig {
                         .successHandler(customAuthenticationSuccessHandler)
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
 
         return http.build();
     }
