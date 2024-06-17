@@ -38,20 +38,16 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String accessToken = jwtUtil.createJwt("access", username, role, 60 * 1000L);
-        String refreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 5 * 1000L);
+        Long refreshTokenExpiredMs = 60 * 5 * 1000L;
+        String refreshToken = jwtUtil.createJwt("refresh", username, role, refreshTokenExpiredMs);
 
         Boolean isExisted = tokenService.existsByUsername(username);
         if (isExisted) {
             tokenService.deleteByUsername(username);
         }
-        tokenService.addRefreshTokenEntity(username, refreshToken, 60 * 60 * 1000L);
+        tokenService.addRefreshTokenEntity(username, refreshToken, refreshTokenExpiredMs);
 
-        response.setHeader("accessToken", accessToken);
         response.addCookie(tokenService.createCookie("refreshToken", refreshToken));
-        response.sendRedirect("http://localhost:5173/");
-
-        log.debug("onAuthenticationSuccess accessToken : {}", accessToken);
-        log.debug("onAuthenticationSuccess refreshToken : {}", refreshToken);
+        response.sendRedirect("http://localhost:5173/callback");
     }
 }

@@ -48,13 +48,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .email(oAuth2Response.getEmail())
                     .name(oAuth2Response.getName())
                     .profileImageUrl(oAuth2Response.getProfileImageUrl())
-                    .role("ROLE_USER")
+                    .role(role)
                     .createdDate(LocalDate.now())
                     .username(username)
                     .build();
 
             userDto.setName(oAuth2Response.getName());
-            userDto.setRole("ROLE_USER");
+            userDto.setRole(role);
             userDto.setUsername(username);
         } else {
             userEntity.updateProfile(oAuth2Response.getProfileImageUrl(), oAuth2Response.getName());

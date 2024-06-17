@@ -1,6 +1,12 @@
 <script setup>
 import { ref } from "vue";
 
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
+
+const userStore = useUserStore();
+const { loginUser, isLogin } = storeToRefs(userStore);
+
 const isShown = ref(false);
 </script>
 
@@ -35,8 +41,16 @@ const isShown = ref(false);
             <a
               href="#"
               class="flex items-center transition-colors hover:text-logo-500"
+              v-if="isLogin"
             >
-              Likes
+              MyPage
+            </a>
+            <a
+              href="#"
+              class="flex items-center transition-colors hover:text-logo-500"
+              v-else
+            >
+              Guest
             </a>
           </li>
           <li

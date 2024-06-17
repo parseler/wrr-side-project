@@ -57,7 +57,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = jwtUtil.getUsername(accessToken);
         String role = jwtUtil.getRole(accessToken);
 
-        log.debug("JwtFilter access token : {}", accessToken);
+        System.out.println("JwtFilter accessToken : " + accessToken);
 
         UserDto userDto = new UserDto();
         userDto.setUsername(username);
