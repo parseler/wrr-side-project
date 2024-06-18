@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
+import { reissue } from "@/api/auth";
 
 const userStore = useUserStore();
 const { loginUser, isLogin } = storeToRefs(userStore);
@@ -28,6 +29,22 @@ const clickLogin = (provider) => {
 
 const guestLogin = () => { };
 
+const test = () => {
+  reissue((response) => {
+    console.log(response);
+    if (response) {
+      const accessToken = response.headers.get("accesstoken");
+
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+      } else {
+        console.log("invalid accessToken");
+      }
+    }
+  }, (error) => {
+    console.log(error);
+  });
+}
 </script>
 <template>
   <div class="flex items-center justify-center px-6 text-center text-white">
@@ -51,7 +68,8 @@ const guestLogin = () => { };
       <div v-else>
         <button
           class="mt-6 select-none rounded-lg bg-gray-900 py-3 px-12 text-center align-middle font-mono text-xl font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button">
+          type="button"
+          @click="test">
           Generate WOD
         </button>
       </div>
