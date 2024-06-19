@@ -1,7 +1,7 @@
 package com.gruns.wrr.auth.util;
 
 import com.gruns.wrr.auth.dto.CustomOAuth2User;
-import com.gruns.wrr.auth.service.TokenService;
+import com.gruns.wrr.auth.service.AuthService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,9 +20,9 @@ import java.util.Iterator;
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtUtil jwtUtil;
-    private final TokenService tokenService;
+    private final AuthService tokenService;
 
-    public CustomAuthenticationSuccessHandler(JwtUtil jwtUtil, TokenService tokenService) {
+    public CustomAuthenticationSuccessHandler(JwtUtil jwtUtil, AuthService tokenService) {
         this.jwtUtil = jwtUtil;
         this.tokenService = tokenService;
     }

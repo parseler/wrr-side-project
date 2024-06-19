@@ -3,7 +3,7 @@ package com.gruns.wrr.auth.service;
 import jakarta.servlet.http.Cookie;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface TokenService {
+public interface AuthService {
     public Cookie createCookie(String key, String value);
 
     public void addRefreshTokenEntity(String username, String token, Long expiredMs);

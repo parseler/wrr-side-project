@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class TokenServiceImpl implements TokenService {
+public class AuthServiceImpl implements AuthService {
 
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public TokenServiceImpl(RefreshTokenRepository refreshTokenRepository) {
+    public AuthServiceImpl(RefreshTokenRepository refreshTokenRepository) {
         this.refreshTokenRepository = refreshTokenRepository;
     }
 

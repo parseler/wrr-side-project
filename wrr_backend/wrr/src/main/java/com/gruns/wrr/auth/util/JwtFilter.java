@@ -29,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String accessToken = request.getHeader("accessToken");
+        System.out.println("JwtFilter accessToken = " + accessToken);
 
         if (accessToken == null) {
             filterChain.doFilter(request, response);
@@ -56,8 +57,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String username = jwtUtil.getUsername(accessToken);
         String role = jwtUtil.getRole(accessToken);
-
-        System.out.println("JwtFilter accessToken : " + accessToken);
 
         UserDto userDto = new UserDto();
         userDto.setUsername(username);

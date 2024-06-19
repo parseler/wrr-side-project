@@ -1,13 +1,11 @@
 package com.gruns.wrr.auth.controller;
 
-import com.gruns.wrr.auth.service.TokenService;
+import com.gruns.wrr.auth.service.AuthService;
 import com.gruns.wrr.auth.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class TokenController {
+public class AuthController {
 
-    private static final Logger log = LoggerFactory.getLogger(TokenController.class);
     private final JwtUtil jwtUtil;
-    private final TokenService tokenService;
+    private final AuthService tokenService;
 
-    public TokenController(JwtUtil jwtUtil, TokenService tokenService) {
+    public AuthController(JwtUtil jwtUtil, AuthService tokenService) {
         this.jwtUtil = jwtUtil;
         this.tokenService = tokenService;
     }
@@ -62,11 +59,11 @@ public class TokenController {
         String username = jwtUtil.getUsername(refreshToken);
         String role = jwtUtil.getRole(refreshToken);
 
-        String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 10 * 1000L);
-        String reissuedRefreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 60 * 1000L);
+        String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 1 * 1000L);
+        String reissuedRefreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 5 * 1000L);
 
         tokenService.deleteByToken(refreshToken);
-        tokenService.addRefreshTokenEntity(username, reissuedRefreshToken, 60 * 60 * 1000L);
+        tokenService.addRefreshTokenEntity(username, reissuedRefreshToken, 60 * 5 * 1000L);
 
         response.setHeader("accessToken", reissuedAccessToken);
         response.addCookie(tokenService.createCookie("refreshToken", reissuedRefreshToken));
