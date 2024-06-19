@@ -2,9 +2,9 @@
 import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/stores/userStore.js";
 import { storeToRefs } from "pinia";
-import { reissue } from "@/api/auth";
+import { reissue } from "@/api/auth.js";
 
 const userStore = useUserStore();
 const { loginUser, isLogin } = storeToRefs(userStore);
