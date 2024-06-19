@@ -8,5 +8,4 @@ async function getUserInfo(accessToken, success, error) {
 
 export {
     getUserInfo,
-
 }

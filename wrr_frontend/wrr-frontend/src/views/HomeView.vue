@@ -68,11 +68,14 @@ const test = () => {
       <div v-else>
         <button
           class="mt-6 select-none rounded-lg bg-gray-900 py-3 px-12 text-center align-middle font-mono text-xl font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-          @click="test">
+          type="button">
           Generate WOD
         </button>
       </div>
+      <p class="cursor-pointer hover:text-logo-500 block antialiased font-mono text-base leading-relaxed text-inherit !mt-4 md:max-w-2xl text-[18px] font-normal text-gray-500 text-decoration-line: underline"
+        @click="test">
+        reissue test
+      </p>
     </div>
     <!-- login modal -->
     <div ref="dialogBackdrop"

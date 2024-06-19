@@ -28,8 +28,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+        if ("/auth/reissue".equals(path)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String accessToken = request.getHeader("accessToken");
-        System.out.println("JwtFilter accessToken = " + accessToken);
 
         if (accessToken == null) {
             filterChain.doFilter(request, response);
@@ -37,6 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         try {
+            System.out.println("JwtFilter accessToken = " + accessToken);
             jwtUtil.isExpired(accessToken);
         } catch(ExpiredJwtException e) {
             PrintWriter writer = response.getWriter();
