@@ -59,7 +59,7 @@ public class AuthController {
         String username = jwtUtil.getUsername(refreshToken);
         String role = jwtUtil.getRole(refreshToken);
 
-        String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 1 * 1000L);
+        String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 2 * 1000L);
         String reissuedRefreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 5 * 1000L);
 
         tokenService.deleteByToken(refreshToken);
@@ -70,4 +70,15 @@ public class AuthController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/valid")
+    public ResponseEntity<?> isValidToken() {
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return null;
+    }
+
 }

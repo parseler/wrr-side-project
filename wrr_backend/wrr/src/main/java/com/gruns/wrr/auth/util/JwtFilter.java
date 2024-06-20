@@ -28,21 +28,24 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        // 재발급일 경우 Access Token 유효 검증 생략
         String path = request.getRequestURI();
+        System.out.println("path = " + path);
         if ("/auth/reissue".equals(path)) {
             filterChain.doFilter(request, response);
             return;
         }
 
+        // Access Token 유효 검증
         String accessToken = request.getHeader("accessToken");
+        System.out.println("JwtFilter accessToken = " + accessToken);
 
         if (accessToken == null) {
-            filterChain.doFilter(request, response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         try {
-            System.out.println("JwtFilter accessToken = " + accessToken);
             jwtUtil.isExpired(accessToken);
         } catch(ExpiredJwtException e) {
             PrintWriter writer = response.getWriter();
@@ -61,6 +64,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
+        // SecurityContextHolder 저장
         String username = jwtUtil.getUsername(accessToken);
         String role = jwtUtil.getRole(accessToken);
 

@@ -48,6 +48,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         tokenService.addRefreshTokenEntity(username, refreshToken, refreshTokenExpiredMs);
 
         response.addCookie(tokenService.createCookie("refreshToken", refreshToken));
-        response.sendRedirect("http://localhost:5173/callback");
+        response.sendRedirect("http://localhost:5173/");
     }
 }
