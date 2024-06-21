@@ -29,16 +29,15 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         // 재발급일 경우 Access Token 유효 검증 생략
-        String path = request.getRequestURI();
-        System.out.println("path = " + path);
-        if ("/auth/reissue".equals(path)) {
+        String requestURI = request.getRequestURI();
+        if ("/auth/reissue".equals(requestURI)) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // Access Token 유효 검증
         String accessToken = request.getHeader("accessToken");
-        System.out.println("JwtFilter accessToken = " + accessToken);
+//        System.out.println("JwtFilter accessToken = " + accessToken);
 
         if (accessToken == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

@@ -1,15 +1,38 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import { useUserStore } from "@/stores/userStore.js";
+import { storeToRefs } from "pinia";
+
+const onlyAuthUser = async (to, from, next) => {
+
+  const userStore = useUserStore();
+  const { loginUser, isLogin } = storeToRefs(userStore);
+  const { isValidToken } = userStore;
+
+  isValidToken();
+
+  if (isLogin.value) {
+    next();
+  } else {
+    next({name: 'home'});
+  }
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: "/",
+      name: "home",
+      component: HomeView,
     },
-  ]
-})
+    {
+      path: "/mypage",
+      name: "mypage",
+      beforeEnter: onlyAuthUser,
+      component: () => import("@/views/MyPageView.vue"),
+    },
+  ],
+});
 
-export default router
+export default router;

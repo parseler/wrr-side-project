@@ -1,7 +1,9 @@
 package com.gruns.wrr.config;
 
+import com.gruns.wrr.auth.repository.RefreshTokenRepository;
 import com.gruns.wrr.auth.service.CustomOAuth2UserService;
 import com.gruns.wrr.auth.util.CustomAuthenticationSuccessHandler;
+import com.gruns.wrr.auth.util.CustomLogoutFilter;
 import com.gruns.wrr.auth.util.JwtFilter;
 import com.gruns.wrr.auth.util.JwtUtil;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -28,13 +31,16 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final JwtUtil jwtUtil;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
                           CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
-                          JwtUtil jwtUtil) {
+                          JwtUtil jwtUtil,
+                          RefreshTokenRepository refreshTokenRepository) {
         this.customOAuth2UserService = customOAuth2UserService;
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         this.jwtUtil = jwtUtil;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     @Bean
@@ -59,7 +65,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class)
-                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshTokenRepository), LogoutFilter.class);
 
         return http.build();
     }
