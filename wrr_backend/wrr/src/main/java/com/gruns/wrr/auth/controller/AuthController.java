@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final JwtUtil jwtUtil;
-    private final AuthService tokenService;
+    private final AuthService authService;
 
-    public AuthController(JwtUtil jwtUtil, AuthService tokenService) {
+    public AuthController(JwtUtil jwtUtil, AuthService authService) {
         this.jwtUtil = jwtUtil;
-        this.tokenService = tokenService;
+        this.authService = authService;
     }
 
     @PostMapping("/reissue")
@@ -51,7 +51,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body("invalid refresh token");
         }
 
-        Boolean isExisted = tokenService.existsByToken(refreshToken);
+        Boolean isExisted = authService.existsByToken(refreshToken);
         if (!isExisted) {
             return ResponseEntity.badRequest().body("invalid refresh token");
         }
@@ -62,11 +62,11 @@ public class AuthController {
         String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 2 * 1000L);
         String reissuedRefreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 5 * 1000L);
 
-        tokenService.deleteByToken(refreshToken);
-        tokenService.addRefreshTokenEntity(username, reissuedRefreshToken, 60 * 5 * 1000L);
+        authService.deleteByToken(refreshToken);
+        authService.addRefreshTokenEntity(username, reissuedRefreshToken, 60 * 5 * 1000L);
 
         response.setHeader("accessToken", reissuedAccessToken);
-        response.addCookie(tokenService.createCookie("refreshToken", reissuedRefreshToken));
+        response.addCookie(authService.createCookie("refreshToken", reissuedRefreshToken));
 
         return ResponseEntity.ok().build();
     }
@@ -78,6 +78,9 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
+
+
+
         return null;
     }
 
