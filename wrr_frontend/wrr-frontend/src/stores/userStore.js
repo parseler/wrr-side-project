@@ -39,12 +39,12 @@ export const useUserStore = defineStore("user", () => {
                 }
               },
               (error) => {
-                console.log(error);
+                // console.log(error);
               }
             );
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
             isLogin.value = false;
             loginUser.value = null;
             localStorage.removeItem("accessToken");

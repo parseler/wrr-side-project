@@ -4,7 +4,6 @@ import { useRouter } from "vue-router";
 
 import { useUserStore } from "@/stores/userStore.js";
 import { storeToRefs } from "pinia";
-import { reissue } from "@/api/auth.js";
 
 const userStore = useUserStore();
 const { loginUser, isLogin } = storeToRefs(userStore);
@@ -46,7 +45,7 @@ onBeforeMount(() => {
       <h1
         class="block antialiased tracking-normal font-mono text-5xl font-bold leading-tight text-blue-gray-900 mt-3 !text-2xl md:text-3xl max-w-xl mx-auto !leading-snug"
       >
-        Start with Crossfit WOD Generator!!!
+        Start Drop-In with Online Crossfit Box !!!
       </h1>
       <div v-if="!isLogin">
         <button
