@@ -32,6 +32,12 @@ const router = createRouter({
       beforeEnter: onlyAuthUser,
       component: () => import("@/views/MyPageView.vue"),
     },
+    {
+      path: "/wod",
+      name: "random-wod",
+      beforeEnter: onlyAuthUser,
+      component: () => import("@/views/RandomWodView.vue"),
+    }
   ],
 });
 

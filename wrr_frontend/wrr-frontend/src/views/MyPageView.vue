@@ -1,6 +1,12 @@
 <script setup>
 import { logout } from "@/api/auth";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore.js";
+import { storeToRefs } from "pinia";
+
+const userStore = useUserStore();
+const { loginUser, isLogin } = storeToRefs(userStore);
+const { isValidToken } = userStore;
 
 const router = useRouter();
 
@@ -19,8 +25,13 @@ const userLogout = () => {
 
 <template>
   <div>
+    <div
+      class="mt-6 select-none rounded-lg bg-btn-700 py-3 px-12 text-center align-middle font-mono text-xl font-bold uppercase text-word transition-all hover:bg-btn-500"
+    >
+      안녕, {{ loginUser.name }}!!!
+  </div>
     <button
-      class="mt-6 select-none rounded-lg bg-gray-900 py-3 px-12 text-center align-middle font-mono text-xl font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      class="mt-6 w-64 select-none rounded-lg bg-btn-700 py-3 px-12 text-center align-middle font-mono text-xl font-bold uppercase text-word transition-all hover:bg-btn-500"
       type="button"
       @click="userLogout"
     >
