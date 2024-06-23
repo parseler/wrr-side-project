@@ -59,11 +59,11 @@ public class AuthController {
         String username = jwtUtil.getUsername(refreshToken);
         String role = jwtUtil.getRole(refreshToken);
 
-        String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 2 * 1000L);
-        String reissuedRefreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 5 * 1000L);
+        String reissuedAccessToken = jwtUtil.createJwt("access", username, role, 60 * 60 * 1000L);
+        String reissuedRefreshToken = jwtUtil.createJwt("refresh", username, role, 60 * 60 * 12 * 1000L);
 
         authService.deleteByToken(refreshToken);
-        authService.addRefreshTokenEntity(username, reissuedRefreshToken, 60 * 5 * 1000L);
+        authService.addRefreshTokenEntity(username, reissuedRefreshToken, 60 * 60 * 12 * 1000L);
 
         response.setHeader("accessToken", reissuedAccessToken);
         response.addCookie(authService.createCookie("refreshToken", reissuedRefreshToken));
@@ -75,13 +75,4 @@ public class AuthController {
     public ResponseEntity<?> isValidToken() {
         return ResponseEntity.ok().build();
     }
-
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout() {
-
-
-
-        return null;
-    }
-
 }

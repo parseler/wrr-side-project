@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
     public Cookie createCookie(String key, String value) {
 
         Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(60*60);
+        cookie.setMaxAge(60 * 60 * 12);
         //cookie.setSecure(true); https 에서만 허용
         cookie.setPath("/");
         cookie.setHttpOnly(true);

@@ -38,7 +38,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        Long refreshTokenExpiredMs = 60 * 5 * 1000L;
+        Long refreshTokenExpiredMs = 60 * 60 * 12 * 1000L;
         String refreshToken = jwtUtil.createJwt("refresh", username, role, refreshTokenExpiredMs);
 
         Boolean isExisted = tokenService.existsByUsername(username);
