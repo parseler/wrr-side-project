@@ -7,11 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        logo: {
-          500: "#FF7F3E"
-        },
-        back: "#003285"
-      },
+        logo: "#fca311",
+        back: "#015807",
+        nav: "#015807",
+        word: "#fefae0",
+        btn: {
+          700: "#fca311",
+          500: "#EF9B0F"
+        }
+      }
     },
   },
   plugins: [],
