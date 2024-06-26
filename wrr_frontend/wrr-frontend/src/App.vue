@@ -9,7 +9,7 @@ import TheFooter from "./components/layout/TheFooter.vue";
     <header>
       <TheHeadingNavBar />
     </header>
-    <main class="flex-grow">
+    <main class="flex-grow overflow-y-auto">
       <router-view></router-view>
     </main>
     <footer class="footer">
