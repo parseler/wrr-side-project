@@ -1,6 +1,7 @@
 package com.gruns.wrr.user.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,7 +22,7 @@ public class UserEntity {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
-    @Column(nullable = false)
+    @NotNull
     private String name; // nickname
 
     private String role;

@@ -69,6 +69,11 @@ onBeforeMount(() => {
           :to="{ name: 'mypage' }">
           Mypage
         </RouterLink>
+        <RouterLink v-if="loginUser.role === 'ROLE_ADMIN'"
+          class="mt-6 w-64 select-none rounded-lg bg-btn-700 py-3 px-12 text-center align-middle font-mono text-xl font-bold uppercase text-word transition-all hover:bg-btn-500"
+          :to="{ name: 'admin' }">
+          Admin
+        </RouterLink>
       </div>
 
 

@@ -1,5 +1,9 @@
 use wrrdb;
 
+INSERT INTO `wrrdb`.`box` (`box_name`)
+VALUES
+('Ultimate Training');
+
 INSERT INTO `wrrdb`.`movement` (`movement_name`)
 VALUES 
 ('AbMat Sit-up'),

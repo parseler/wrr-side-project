@@ -18,6 +18,21 @@ const onlyAuthUser = async (to, from, next) => {
   }
 };
 
+const onlyAdmin = async (to, from, next) => {
+  const userStore = useUserStore();
+  const { loginUser, isLogin } = storeToRefs(userStore);
+  const { isValidToken } = userStore;
+
+  isValidToken();
+  console.log(loginUser.value);
+
+  if (isLogin.value && loginUser.value.role === "ROLE_ADMIN") {
+    next();
+  } else {
+    next({name: 'home'});
+  }
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +52,12 @@ const router = createRouter({
       name: "random-wod",
       beforeEnter: onlyAuthUser,
       component: () => import("@/views/RandomWodView.vue"),
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      beforeEnter: onlyAdmin,
+      component: () => import("@/views/AdminView.vue")
     }
   ],
 });

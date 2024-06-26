@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS `wrrdb`.`movement` (
   `movement_id` INT NOT NULL AUTO_INCREMENT,
   `movement_name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`movement_id`),
-  UNIQUE INDEX `movement_id_UNIQUE` (`movement_id` ASC) VISIBLE)
+  UNIQUE INDEX `movement_id_UNIQUE` (`movement_id` ASC) VISIBLE,
+  UNIQUE INDEX `movement_name_UNIQUE` (`movement_name` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -38,21 +39,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `wrrdb`.`user`
+-- Table `wrrdb`.`box`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wrrdb`.`user` (
-  `created_date` DATE NULL DEFAULT NULL,
-  `user_id` BIGINT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(255) NULL DEFAULT NULL,
-  `name` VARCHAR(255) NOT NULL,
-  `profile_image_url` VARCHAR(255) NULL DEFAULT NULL,
-  `role` VARCHAR(255) NULL DEFAULT NULL,
-  `username` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `UKsb8bbouer5wak8vyiiy4pf2bx` (`username` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+CREATE TABLE IF NOT EXISTS `wrrdb`.`box` (
+  `box_id` INT NOT NULL AUTO_INCREMENT,
+  `box_name` VARCHAR(255) NULL,
+  PRIMARY KEY (`box_id`),
+  UNIQUE INDEX `box_name_UNIQUE` (`box_name` ASC) VISIBLE)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -60,17 +54,19 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wrrdb`.`wod` (
   `wod_id` BIGINT NOT NULL AUTO_INCREMENT,
-  `user_id` BIGINT NOT NULL,
+  `box_id` INT NOT NULL,
   `wod_name` VARCHAR(255) NULL DEFAULT NULL,
   `team_size` INT NULL DEFAULT '1',
   `likes` INT NULL DEFAULT '0',
   `description` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`wod_id`),
   UNIQUE INDEX `wod_id_UNIQUE` (`wod_id` ASC) VISIBLE,
-  INDEX `fk_wod_user_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_wod_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `wrrdb`.`user` (`user_id`))
+  INDEX `fk_wod_box1_idx` (`box_id` ASC) VISIBLE,
+  CONSTRAINT `fk_wod_box1`
+    FOREIGN KEY (`box_id`)
+    REFERENCES `wrrdb`.`box` (`box_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -168,6 +164,24 @@ CREATE TABLE IF NOT EXISTS `wrrdb`.`type_rft` (
   CONSTRAINT `fk_type_rft_workout1`
     FOREIGN KEY (`workout_id`)
     REFERENCES `wrrdb`.`workout` (`workout_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `wrrdb`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wrrdb`.`user` (
+  `created_date` DATE NULL DEFAULT NULL,
+  `user_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `profile_image_url` VARCHAR(255) NULL DEFAULT NULL,
+  `role` VARCHAR(255) NULL DEFAULT NULL,
+  `username` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `UKsb8bbouer5wak8vyiiy4pf2bx` (`username` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;

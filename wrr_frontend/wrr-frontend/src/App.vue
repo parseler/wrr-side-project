@@ -5,14 +5,12 @@ import TheFooter from "./components/layout/TheFooter.vue";
 </script>
 
 <template>
-  <div class="bg-back h-screen">
+  <div class="bg-back h-screen flex flex-col">
     <header>
       <TheHeadingNavBar />
     </header>
-    <main>
-      <div>
-        <router-view></router-view>
-      </div>
+    <main class="flex-grow">
+      <router-view></router-view>
     </main>
     <footer class="footer">
       <TheFooter />
@@ -20,11 +18,11 @@ import TheFooter from "./components/layout/TheFooter.vue";
   </div>
 </template>
 
-<style>
+<style scoped>
+main {
+  flex: 1;
+}
 .footer {
   width: 100%;
-  height: 95px;
-  bottom: 0;
-  position: fixed;
 }
 </style>
