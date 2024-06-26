@@ -2,7 +2,8 @@ use wrrdb;
 
 INSERT INTO `wrrdb`.`box` (`box_name`)
 VALUES
-('Ultimate Training');
+('Ultimate Training'),
+('Sweat on Seoul');
 
 INSERT INTO `wrrdb`.`movement` (`movement_name`)
 VALUES 
