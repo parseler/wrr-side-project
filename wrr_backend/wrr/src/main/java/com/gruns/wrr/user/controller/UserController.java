@@ -1,5 +1,6 @@
 package com.gruns.wrr.user.controller;
 
+import com.gruns.wrr.user.dto.UserDto;
 import com.gruns.wrr.user.entity.UserEntity;
 import com.gruns.wrr.user.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,12 @@ public class UserController {
     @PostMapping("/info")
     public ResponseEntity<?> getUserInfo(@RequestBody String accessToken) {
         System.out.println("accessToken = " + accessToken);
-        UserEntity userEntity = userService.getUserInfo(accessToken);
+        UserDto userDto = userService.getUserInfo(accessToken);
 
-        if (userEntity == null) {
+        if (userDto == null) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok().body(userEntity);
+            return ResponseEntity.ok().body(userDto);
         }
     }
 }

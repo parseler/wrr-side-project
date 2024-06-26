@@ -1,7 +1,7 @@
 package com.gruns.wrr.user.service;
 
-import com.gruns.wrr.user.entity.UserEntity;
+import com.gruns.wrr.user.dto.UserDto;
 
 public interface UserService {
-    UserEntity getUserInfo(String accessToken);
+    UserDto getUserInfo(String accessToken);
 }
