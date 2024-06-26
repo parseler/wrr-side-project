@@ -24,7 +24,6 @@ const onlyAdmin = async (to, from, next) => {
   const { isValidToken } = userStore;
 
   isValidToken();
-  console.log(loginUser.value);
 
   if (isLogin.value && loginUser.value.role === "ROLE_ADMIN") {
     next();
