@@ -191,9 +191,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `wrrdb`.`workout_movement`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wrrdb`.`workout_movement` (
-  `workout_type_movement_id` INT NOT NULL AUTO_INCREMENT,
+  `workout_movement_id` BIGINT NOT NULL,
   `workout_id` BIGINT NOT NULL,
-  `workout_movementcol` VARCHAR(45) NULL DEFAULT NULL,
   `movement_id` INT NOT NULL,
   `reps_unit` VARCHAR(45) NULL DEFAULT NULL,
   `reps_male` INT NULL DEFAULT '0',
@@ -203,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `wrrdb`.`workout_movement` (
   `weight_female` FLOAT NULL DEFAULT '0',
   `synchronized` TINYINT NULL DEFAULT NULL,
   `seq` INT NULL DEFAULT NULL,
-  PRIMARY KEY (`workout_type_movement_id`),
+  PRIMARY KEY (`workout_movement_id`),
   INDEX `fk_wod_type_movement_movement1_idx` (`movement_id` ASC) VISIBLE,
   INDEX `fk_workout_type_movement_workout1_idx` (`workout_id` ASC) VISIBLE,
   CONSTRAINT `fk_wod_type_movement_movement1`
