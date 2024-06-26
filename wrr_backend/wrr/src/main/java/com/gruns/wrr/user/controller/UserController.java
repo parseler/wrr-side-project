@@ -21,7 +21,6 @@ public class UserController {
 
     @PostMapping("/info")
     public ResponseEntity<?> getUserInfo(@RequestBody String accessToken) {
-        System.out.println("accessToken = " + accessToken);
         UserDto userDto = userService.getUserInfo(accessToken);
 
         if (userDto == null) {

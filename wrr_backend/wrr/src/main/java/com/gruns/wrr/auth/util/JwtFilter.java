@@ -37,7 +37,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Access Token 유효 검증
         String accessToken = request.getHeader("accessToken");
-//        System.out.println("JwtFilter accessToken = " + accessToken);
 
         if (accessToken == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
