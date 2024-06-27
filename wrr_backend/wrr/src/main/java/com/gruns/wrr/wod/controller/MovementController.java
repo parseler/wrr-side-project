@@ -23,8 +23,6 @@ public class MovementController {
     public ResponseEntity<?> getMovementList() {
 
         List<MovementDto> list = wodService.getMovementList();
-        System.out.println("list = " + list);
-
         return ResponseEntity.ok(list);
     }
 }
