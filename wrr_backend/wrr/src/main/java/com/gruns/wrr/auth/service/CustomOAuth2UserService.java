@@ -40,7 +40,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String username = oAuth2Response.getProvider() + "_" + oAuth2Response.getProviderId();
 
         UserEntity userEntity = userRepository.findByUsername(username);
-        UserDto userDto = new UserDto();
+        UserDto userDto;
         String role = "ROLE_USER";
 
         if (userEntity == null) {
@@ -53,15 +53,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .username(username)
                     .build();
 
-            userDto.setName(oAuth2Response.getName());
-            userDto.setRole(role);
-            userDto.setUsername(username);
+            userDto = UserDto
+                    .builder()
+                    .name(oAuth2Response.getName())
+                    .role(role)
+                    .username(username).build();
         } else {
             userEntity.updateProfile(oAuth2Response.getProfileImageUrl(), oAuth2Response.getName());
 
-            userDto.setName(oAuth2Response.getName());
-            userDto.setRole(userEntity.getRole());
-            userDto.setUsername(username);
+            userDto = UserDto.builder()
+                    .name(oAuth2Response.getName())
+                    .role(userEntity.getRole())
+                    .username(username).build();
         }
 
         userRepository.save(userEntity);

@@ -13,7 +13,7 @@ public class WodController {
     
     @PostMapping("/save")
     public ResponseEntity<?> saveWod(@RequestBody WodDto wodDto) {
-
+        return null;
     }
 
 
