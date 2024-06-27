@@ -23,6 +23,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+
 -- -----------------------------------------------------
 -- Table `wrrdb`.`refresh_token`
 -- -----------------------------------------------------
@@ -134,7 +135,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wrrdb`.`type_onoff` (
   `type_onoff_id` INT NOT NULL AUTO_INCREMENT,
-  `type_onoffcol` VARCHAR(45) NULL DEFAULT NULL,
   `workout_id` BIGINT NOT NULL,
   `round` INT NULL DEFAULT NULL,
   `time_cap` TIME NULL DEFAULT NULL,
