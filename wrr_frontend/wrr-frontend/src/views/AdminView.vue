@@ -12,32 +12,11 @@ const wod = ref({
   workouts: [],
 });
 
-const workout = ref({
-  workoutId: 0,
-  wodId: 0,
-  type: "",
-  seq: 0,
-  parentWorkoutId: 0,
-  workoutMovements: [],
-});
-
-const workoutMovement = ref({
-  workoutMovementId: 0,
-  workoutId: 0,
-  movementId: 1,
-  repsUnit: "",
-  repsMale: 0,
-  repsFemale: 0,
-  weightUnit: "",
-  weightMale: 0,
-  weightFemale: 0,
-  synchronized: 0,
-  seq: 0,
-});
-
 const movementList = ref([]);
 const boxList = ref([]);
 const workoutTypeList = ["amrap", "onoff", "rft", "emom"];
+const repsUnitOptions = ["rep", "m", "km", "cal"];
+const weightUnitOptions = ["kg", "lb"];
 
 onMounted(async () => {
   getMovementList(
@@ -59,24 +38,52 @@ onMounted(async () => {
 });
 
 const addWorkout = () => {
-  const workout = ref({
+  const workout = {
     workoutId: 0,
     wodId: 0,
-    type: "",
+    type: { name: "" },
     seq: 0,
     parentWorkoutId: 0,
     workoutMovements: [],
-  });
-  wod.value.workouts.push({ workout });
+  };
+  wod.value.workouts.push(workout);
 };
 
 const deleteWorkout = (index) => {
   wod.value.workouts.splice(index, 1);
 };
 
+const addMovement = (index) => {
+  const workoutMovement = {
+    workoutMovementId: 0,
+    workoutId: 0,
+    movementId: 1,
+    repsUnit: "",
+    repsMale: 0,
+    repsFemale: 0,
+    weightUnit: "",
+    weightMale: 0,
+    weightFemale: 0,
+    synchronized: 0,
+    seq: 0,
+  };
+
+  wod.value.workouts[index].workoutMovements.push(workoutMovement);
+};
+
 const submitWod = () => {
+
+  for (var i = 0; i < wod.value.workouts.length; i++) {
+    wod.value.workouts[i].seq = i + 1;
+
+    for (var j = 0; j < wod.value.workouts[i].workoutMovements.length; j++) {
+      wod.value.workouts[i].workoutMovements[j].seq = j + 1;
+    }
+  }
+
   console.log(wod.value);
 };
+
 </script>
 
 <template>
@@ -86,54 +93,120 @@ const submitWod = () => {
         <legend>WOD</legend>
         <div class="form-group">
           <label for="wodName">WOD Name</label>
-          <input
-            v-model="wod.wodName"
-            type="text"
-            name="wodName"
-            id="wodName"
-          />
+          <input v-model="wod.wodName" type="text" name="wodName" id="wodName" />
         </div>
         <div class="form-group">
           <label for="boxName">Box Name</label>
           <select name="boxName" id="boxName" v-model="wod.boxId">
-            <option
-              :value="box.boxId"
-              v-for="(box, index) in boxList"
-              :key="box.boxId"
-            >
+            <option :value="box.boxId" v-for="(box, index) in boxList" :key="box.boxId">
               {{ box.boxName }}
             </option>
           </select>
         </div>
         <div class="form-group">
           <label for="teamSize">Team of</label>
-          <input
-            v-model="wod.teamSize"
-            type="number"
-            name="teamSize"
-            id="teamSize"
-          />
+          <input v-model="wod.teamSize" type="number" name="teamSize" id="teamSize" min="1" />
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea
-            v-model="wod.description"
-            name="description"
-            id="description"
-          ></textarea>
+          <textarea v-model="wod.description" name="description" id="description"></textarea>
         </div>
-        <button type="button" @click="addWorkout" class="add-workout-button">
+        <button type="button" @click="addWorkout" class="submit-button mt-3">
           Add Workout
         </button>
+        <!-- workout -->
         <fieldset v-for="(workout, index) in wod.workouts" :key="index">
           <legend>Workout {{ index + 1 }}</legend>
           <div class="form-group">
             <label for="workoutType">Workout Type</label>
-            <select name="workoutType" id="workoutType">
-                <option :value="type" v-for="(type, index) in workoutTypeList" :key="index">{{ type }}</option>
+            <select name="workoutType" id="workoutType" v-model="workout.type.name">
+              <option :value="type" v-for="(type, index) in workoutTypeList" :key="index">{{ type }}</option>
             </select>
           </div>
-          <button class="submit-button mt-3" @click="deleteWorkout(index)">Delete</button>
+          <div v-if="workout.type.name === 'emom'">
+            <div class="form-group">
+              <label for="round">Round</label>
+              <input v-model="workout.type.round" type="number" name="round" id="round" min="1" />
+            </div>
+            <div class="form-group">
+              <label for="timeCap">Time Cap (HH:MM:SS)</label>
+              <input v-model="workout.type.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+            </div>
+          </div>
+          <div v-if="workout.type.name === 'rft'">
+            <div class="form-group">
+              <label for="round">Round</label>
+              <input v-model="workout.type.round" type="number" name="round" id="round" min="1" />
+            </div>
+            <div class="form-group">
+              <label for="timeCap">Time Cap (HH:MM:SS)</label>
+              <input v-model="workout.type.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+            </div>
+          </div>
+          <div v-if="workout.type.name === 'amrap'">
+            <div class="form-group">
+              <label for="timeCap">Time Cap (HH:MM:SS)</label>
+              <input v-model="workout.type.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+            </div>
+          </div>
+          <div v-if="workout.type.name === 'onoff'">
+            <div class="form-group">
+              <label for="round">Round</label>
+              <input v-model="workout.type.round" type="number" name="round" id="round" min="1" />
+            </div>
+            <div class="form-group">
+              <label for="timeCap">Time Cap (HH:MM:SS)</label>
+              <input v-model="workout.type.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+            </div>
+            <div class="form-group">
+              <label for="onTime">On Time</label>
+              <input v-model="workout.type.onTime" type="text" name="onTime" id="onTime" placeholder="HH:MM:SS" />
+            </div>
+            <div class="form-group">
+              <label for="offTime">Off Time</label>
+              <input v-model="workout.type.offTime" type="text" name="offTime" id="offTime" placeholder="HH:MM:SS" />
+            </div>
+          </div>
+
+          <fieldset v-for="(movement, index) in workout.workoutMovements" :key="index">
+            <legend>Movement {{ index + 1 }}</legend>
+            <div class="form-group">
+              <label for="workoutType">Movement Name</label>
+              <select name="movementId" id="movementId" v-model="movement.movementId" required>
+                <option :value="move.movementId" v-for="(move, index) in movementList" :key="index">{{ move.movementName
+                  }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="repsMale">Reps Male</label>
+              <input type="number" v-model="movement.repsMale" step="0.1" name="repsMale" id="repsMale">
+              <label for="repsFemale">Reps Female</label>
+              <input type="number" v-model="movement.repsFemale" step="0.1" name="repsFemale" id="repsFemale">
+              <label for="repsUnit">Reps Unit</label>
+              <select name="repsUnit" id="repsUnit" v-model="movement.repsUnit">
+                <option :value="unit" v-for="(unit, index) in repsUnitOptions" :key="index">
+                  {{ unit }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="weightMale">Weight Male</label>
+              <input type="number" v-model="movement.weightMale" step="0.1" name="weightMale" id="weightMale">
+              <label for="weightFemale">Weight Female</label>
+              <input type="number" v-model="movement.weightFemale" step="0.1" name="weightFemale" id="weightFemale">
+              <label for="weightUnit">Weight Unit</label>
+              <select name="weightUnit" id="weightUnit" v-model="movement.weightUnit">
+                <option :value="unit" v-for="(unit, index) in weightUnitOptions" :key="index">
+                  {{ unit }}
+                </option>
+              </select>
+            </div>
+            <button class="submit-button mt-3" @click="workout.workoutMovements.splice(index, 1)" type="button">Delete
+              Movement</button>
+          </fieldset>
+
+          <button class="submit-button mt-3" @click="addMovement(index)" type="button">Add Movement</button>
+          <button class="submit-button mt-3" @click="deleteWorkout(index)" type="button">Delete Workout</button>
         </fieldset>
       </fieldset>
       <button class="submit-button mt-3">Save</button>
