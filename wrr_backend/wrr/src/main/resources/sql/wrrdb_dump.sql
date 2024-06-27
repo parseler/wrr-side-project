@@ -24,6 +24,7 @@ VALUES
 ('Clean and Push Jerk'),
 ('Deadlift'),
 ('Dip'),
+('Devil Press'),
 ('Double-under'),
 ('Dumbbell Clean'),
 ('Dumbbell Deadlift'),
