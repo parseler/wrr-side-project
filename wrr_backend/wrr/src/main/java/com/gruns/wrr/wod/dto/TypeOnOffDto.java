@@ -8,7 +8,7 @@ import java.sql.Time;
 
 @Getter
 @Setter
-public class TypeOnoffDto extends TypeDto {
+public class TypeOnOffDto extends TypeDto {
     private int round;
     private Time onTime;
     private Time offTime;

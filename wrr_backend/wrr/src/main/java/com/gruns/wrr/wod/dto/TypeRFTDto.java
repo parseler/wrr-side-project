@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TypeEmomDto extends TypeDto {
+public class TypeRFTDto extends TypeDto {
     private int round;
 }

@@ -14,7 +14,7 @@ const wod = ref({
 
 const movementList = ref([]);
 const boxList = ref([]);
-const workoutTypeList = ["amrap", "onoff", "rft", "emom"];
+const workoutTypeList = ["AMRAP", "OnOff", "RFT", "EMOM"];
 const repsUnitOptions = ["rep", "m", "km", "cal"];
 const weightUnitOptions = ["kg", "lb"];
 
@@ -41,7 +41,7 @@ const addWorkout = () => {
   const workout = {
     workoutId: 0,
     wodId: 0,
-    type: { name: "" },
+    type: { workoutType: "" },
     seq: 0,
     parentWorkoutId: 0,
     workoutMovements: [],
@@ -88,7 +88,7 @@ const submitWod = () => {
       console.log(error);
     }
   )
-  // console.log(wod.value);
+  console.log(wod.value);
 };
 
 </script>
@@ -126,11 +126,11 @@ const submitWod = () => {
           <legend>Workout {{ index + 1 }}</legend>
           <div class="form-group">
             <label for="workoutType">Workout Type</label>
-            <select name="workoutType" id="workoutType" v-model="workout.type.name">
+            <select name="workoutType" id="workoutType" v-model="workout.type.workoutType">
               <option :value="type" v-for="(type, index) in workoutTypeList" :key="index">{{ type }}</option>
             </select>
           </div>
-          <div v-if="workout.type.name === 'emom'">
+          <div v-if="workout.type.workoutType === 'EMOM'">
             <div class="form-group">
               <label for="round">Round</label>
               <input v-model="workout.type.round" type="number" name="round" id="round" min="1" />
@@ -140,7 +140,7 @@ const submitWod = () => {
               <input v-model="workout.type.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
             </div>
           </div>
-          <div v-if="workout.type.name === 'rft'">
+          <div v-if="workout.type.workoutType === 'RFT'">
             <div class="form-group">
               <label for="round">Round</label>
               <input v-model="workout.type.round" type="number" name="round" id="round" min="1" />
@@ -150,13 +150,13 @@ const submitWod = () => {
               <input v-model="workout.type.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
             </div>
           </div>
-          <div v-if="workout.type.name === 'amrap'">
+          <div v-if="workout.type.workoutType === 'AMRAP'">
             <div class="form-group">
               <label for="timeCap">Time Cap (HH:MM:SS)</label>
               <input v-model="workout.type.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
             </div>
           </div>
-          <div v-if="workout.type.name === 'onoff'">
+          <div v-if="workout.type.workoutType === 'OnOff'">
             <div class="form-group">
               <label for="round">Round</label>
               <input v-model="workout.type.round" type="number" name="round" id="round" min="1" />
