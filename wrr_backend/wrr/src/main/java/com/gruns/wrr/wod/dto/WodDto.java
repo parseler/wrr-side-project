@@ -1,11 +1,12 @@
 package com.gruns.wrr.wod.dto;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
 public class WodDto {
     private long wodId;
     private int boxId;
@@ -15,17 +16,17 @@ public class WodDto {
     private String description;
     private List<WorkoutDto> workouts;
 
-    public WodDto() {
-    }
-
-    @Builder
-    public WodDto(long wodId, int boxId, String wodName, int teamSize, int likes, String description, List<WorkoutDto> workouts) {
-        this.wodId = wodId;
-        this.boxId = boxId;
-        this.wodName = wodName;
-        this.teamSize = teamSize;
-        this.likes = likes;
-        this.description = description;
-        this.workouts = workouts;
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("WodDto{");
+        sb.append("wodId=").append(wodId);
+        sb.append(", boxId=").append(boxId);
+        sb.append(", wodName='").append(wodName).append('\'');
+        sb.append(", teamSize=").append(teamSize);
+        sb.append(", likes=").append(likes);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", workouts=").append(workouts);
+        sb.append('}');
+        return sb.toString();
     }
 }

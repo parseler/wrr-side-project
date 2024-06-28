@@ -1,5 +1,5 @@
 <script setup>
-import { getBoxList, getMovementList } from "@/api/wod";
+import { getBoxList, getMovementList, saveWod } from "@/api/wod";
 import { onMounted, ref } from "vue";
 
 const wod = ref({
@@ -80,8 +80,15 @@ const submitWod = () => {
       wod.value.workouts[i].workoutMovements[j].seq = j + 1;
     }
   }
-
-  console.log(wod.value);
+  saveWod(wod.value,
+    (response) => {
+      console.log(response);
+    },
+    (error) => {
+      console.log(error);
+    }
+  )
+  // console.log(wod.value);
 };
 
 </script>

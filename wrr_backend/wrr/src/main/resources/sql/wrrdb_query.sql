@@ -129,7 +129,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
 -- -----------------------------------------------------
 -- Table `wrrdb`.`type_onoff`
 -- -----------------------------------------------------
@@ -138,8 +137,8 @@ CREATE TABLE IF NOT EXISTS `wrrdb`.`type_onoff` (
   `workout_id` BIGINT NOT NULL,
   `round` INT NULL DEFAULT NULL,
   `time_cap` TIME NULL DEFAULT NULL,
-  `on_time` INT NULL DEFAULT NULL,
-  `off_time` INT NULL DEFAULT NULL,
+  `on_time` TIME NULL DEFAULT NULL,
+  `off_time` TIME NULL DEFAULT NULL,
   PRIMARY KEY (`type_onoff_id`),
   INDEX `fk_type_onoff_workout1_idx` (`workout_id` ASC) VISIBLE,
   CONSTRAINT `fk_type_onoff_workout1`
