@@ -1,9 +1,7 @@
 package com.gruns.wrr.wod.controller;
 
 import com.gruns.wrr.wod.dto.WodDto;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.gruns.wrr.wod.service.WodService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/wod")
 public class WodController {
 
+    private final WodService wodService;
+
+    public WodController(WodService wodService) {
+        this.wodService = wodService;
+    }
+
     @PostMapping("/save")
     public ResponseEntity<?> saveWod(@RequestBody WodDto wodDto) {
         System.out.println("wodDto = " + wodDto);
-        return null;
+
+        return ResponseEntity.ok().build();
     }
 }

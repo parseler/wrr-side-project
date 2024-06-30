@@ -1,10 +1,10 @@
-package com.gruns.wrr.wod.dto;
+package com.gruns.wrr.wod.dto.type;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class TypeEMOMDto extends TypeDto {
+public class TypeRFTDto extends TypeDto {
     private int round;
 }

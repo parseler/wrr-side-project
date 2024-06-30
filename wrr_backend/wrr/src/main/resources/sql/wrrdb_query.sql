@@ -39,6 +39,24 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `wrrdb`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wrrdb`.`user` (
+  `created_date` DATE NULL DEFAULT NULL,
+  `user_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `profile_image_url` VARCHAR(255) NULL DEFAULT NULL,
+  `role` VARCHAR(255) NULL DEFAULT NULL,
+  `username` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `UKsb8bbouer5wak8vyiiy4pf2bx` (`username` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `wrrdb`.`box`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wrrdb`.`box` (
@@ -78,7 +96,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `wrrdb`.`workout` (
   `workout_id` BIGINT NOT NULL AUTO_INCREMENT,
   `wod_id` BIGINT NOT NULL,
-  `type` VARCHAR(45) NULL DEFAULT NULL,
+  `type_name` VARCHAR(45) NULL,
   `seq` INT NULL DEFAULT NULL,
   `parent_workout_id` BIGINT NOT NULL,
   PRIMARY KEY (`workout_id`),
@@ -90,96 +108,6 @@ CREATE TABLE IF NOT EXISTS `wrrdb`.`workout` (
   CONSTRAINT `fk_workout_workout1`
     FOREIGN KEY (`parent_workout_id`)
     REFERENCES `wrrdb`.`workout` (`workout_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `wrrdb`.`type_amrap`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wrrdb`.`type_amrap` (
-  `type_amrap_id` INT NOT NULL AUTO_INCREMENT,
-  `workout_id` BIGINT NOT NULL,
-  `time_cap` TIME NULL DEFAULT NULL,
-  PRIMARY KEY (`type_amrap_id`),
-  INDEX `fk_type_amrap_workout1_idx` (`workout_id` ASC) VISIBLE,
-  CONSTRAINT `fk_type_amrap_workout1`
-    FOREIGN KEY (`workout_id`)
-    REFERENCES `wrrdb`.`workout` (`workout_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `wrrdb`.`type_emom`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wrrdb`.`type_emom` (
-  `type_emom_id` INT NOT NULL AUTO_INCREMENT,
-  `workout_id` BIGINT NOT NULL,
-  `round` INT NULL DEFAULT NULL,
-  `time_cap` TIME NULL DEFAULT NULL,
-  PRIMARY KEY (`type_emom_id`),
-  INDEX `fk_type_emom_workout1_idx` (`workout_id` ASC) VISIBLE,
-  CONSTRAINT `fk_type_emom_workout1`
-    FOREIGN KEY (`workout_id`)
-    REFERENCES `wrrdb`.`workout` (`workout_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
--- -----------------------------------------------------
--- Table `wrrdb`.`type_onoff`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wrrdb`.`type_onoff` (
-  `type_onoff_id` INT NOT NULL AUTO_INCREMENT,
-  `workout_id` BIGINT NOT NULL,
-  `round` INT NULL DEFAULT NULL,
-  `time_cap` TIME NULL DEFAULT NULL,
-  `on_time` TIME NULL DEFAULT NULL,
-  `off_time` TIME NULL DEFAULT NULL,
-  PRIMARY KEY (`type_onoff_id`),
-  INDEX `fk_type_onoff_workout1_idx` (`workout_id` ASC) VISIBLE,
-  CONSTRAINT `fk_type_onoff_workout1`
-    FOREIGN KEY (`workout_id`)
-    REFERENCES `wrrdb`.`workout` (`workout_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `wrrdb`.`type_rft`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wrrdb`.`type_rft` (
-  `type_rft_id` INT NOT NULL AUTO_INCREMENT,
-  `workout_id` BIGINT NOT NULL,
-  `round` INT NULL DEFAULT NULL,
-  `time_cap` TIME NULL DEFAULT NULL,
-  PRIMARY KEY (`type_rft_id`),
-  INDEX `fk_type_rft_workout1_idx` (`workout_id` ASC) VISIBLE,
-  CONSTRAINT `fk_type_rft_workout1`
-    FOREIGN KEY (`workout_id`)
-    REFERENCES `wrrdb`.`workout` (`workout_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `wrrdb`.`user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wrrdb`.`user` (
-  `created_date` DATE NULL DEFAULT NULL,
-  `user_id` BIGINT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(255) NULL DEFAULT NULL,
-  `name` VARCHAR(255) NOT NULL,
-  `profile_image_url` VARCHAR(255) NULL DEFAULT NULL,
-  `role` VARCHAR(255) NULL DEFAULT NULL,
-  `username` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `UKsb8bbouer5wak8vyiiy4pf2bx` (`username` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -212,6 +140,43 @@ CREATE TABLE IF NOT EXISTS `wrrdb`.`workout_movement` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `wrrdb`.`type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wrrdb`.`type` (
+  `type_id` INT NOT NULL AUTO_INCREMENT,
+  `type_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`type_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `wrrdb`.`workout_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wrrdb`.`workout_type` (
+  `workout_type_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `workout_id` BIGINT NOT NULL,
+  `type_id` INT NOT NULL,
+  `round` INT NULL,
+  `time_cap` TIME NULL,
+  `on_time` TIME NULL,
+  `off_time` TIME NULL,
+  PRIMARY KEY (`workout_type_id`),
+  INDEX `fk_workout_type_workout1_idx` (`workout_id` ASC) VISIBLE,
+  INDEX `fk_workout_type_type1_idx` (`type_id` ASC) VISIBLE,
+  CONSTRAINT `fk_workout_type_workout1`
+    FOREIGN KEY (`workout_id`)
+    REFERENCES `wrrdb`.`workout` (`workout_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_workout_type_type1`
+    FOREIGN KEY (`type_id`)
+    REFERENCES `wrrdb`.`type` (`type_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

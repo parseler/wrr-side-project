@@ -1,5 +1,6 @@
 package com.gruns.wrr.wod.dto;
 
+import com.gruns.wrr.wod.dto.type.TypeDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,7 +10,7 @@ import lombok.ToString;
 @ToString
 public class WorkoutDto {
     private long workoutId;
-    private int wodId;
+    private long wodId;
     private TypeDto type;
     private int seq;
     private long parentWorkoutId;

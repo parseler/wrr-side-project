@@ -1,8 +1,7 @@
-package com.gruns.wrr.wod.dto;
+package com.gruns.wrr.wod.dto.type;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
