@@ -4,7 +4,7 @@
   <!-- component -->
   <div class="mt-12 flex justify-center">
     <div
-      class="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-back bg-clip-border text-logo shadow-lg text-center"
+      class="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-back bg-clip-border text-logo shadow-lg shadow-logo text-center"
     >
       <div class="p-6 flex flex-col items-center justify-center w-full">
         <h4
