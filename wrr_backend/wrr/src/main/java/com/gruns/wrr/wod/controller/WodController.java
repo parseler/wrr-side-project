@@ -33,7 +33,14 @@ public class WodController {
 
     @PostMapping("/random")
     public ResponseEntity<?> getRandomWod() {
-        return null;
+
+        WodDto wodDto = wodService.getRandomWod();
+
+        if (wodDto == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(wodDto);
+        }
     }
 
     @PostMapping("/movement/list")

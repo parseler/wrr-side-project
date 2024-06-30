@@ -101,6 +101,14 @@ public class WodServiceImpl implements WodService {
         }
     }
 
+    @Override
+    public WodDto getRandomWod() {
+
+        WodEntity wodEntity = wodRepository.findRandomWod();
+        System.out.println("wodEntity = " + wodEntity);
+        return null;
+    }
+
     private void saveWorkout(WorkoutDto workoutDto) {
         WorkoutEntity workoutEntity = WorkoutEntity
                 .builder()

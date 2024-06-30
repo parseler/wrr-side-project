@@ -9,4 +9,6 @@ public interface WodService {
     List<BoxDto> getBoxList();
     List<TypeDto> getTypeList();
     void saveWod(WodDto wodDto);
+
+    WodDto getRandomWod();
 }
