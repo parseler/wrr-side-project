@@ -31,6 +31,11 @@ public class WodController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/random")
+    public ResponseEntity<?> getRandomWod() {
+        return null;
+    }
+
     @PostMapping("/movement/list")
     public ResponseEntity<?> getMovementList() {
 
