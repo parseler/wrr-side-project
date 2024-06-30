@@ -107,12 +107,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
 -- -----------------------------------------------------
 -- Table `wrrdb`.`workout_movement`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wrrdb`.`workout_movement` (
-  `workout_movement_id` BIGINT NOT NULL,
+  `workout_movement_id` BIGINT NOT NULL AUTO_INCREMENT,
   `workout_id` BIGINT NOT NULL,
   `movement_id` INT NOT NULL,
   `reps_unit` VARCHAR(45) NULL DEFAULT NULL,
@@ -121,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `wrrdb`.`workout_movement` (
   `weight_unit` VARCHAR(45) NULL DEFAULT NULL,
   `weight_male` FLOAT NULL DEFAULT '0',
   `weight_female` FLOAT NULL DEFAULT '0',
-  `synchronized` TINYINT NULL DEFAULT NULL,
+  `synchro` TINYINT NULL DEFAULT NULL,
   `seq` INT NULL DEFAULT NULL,
   PRIMARY KEY (`workout_movement_id`),
   INDEX `fk_wod_type_movement_movement1_idx` (`movement_id` ASC) VISIBLE,
