@@ -2,11 +2,16 @@ package com.gruns.wrr.wod.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "movement")
 public class MovementEntity {
 
@@ -17,12 +22,4 @@ public class MovementEntity {
     @NotNull
     @Column(unique = true)
     private String movementName;
-
-    public MovementEntity() {
-    }
-
-    @Builder
-    public MovementEntity(String movementName) {
-        this.movementName = movementName;
-    }
 }

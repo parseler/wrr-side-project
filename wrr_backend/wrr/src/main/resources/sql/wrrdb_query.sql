@@ -96,18 +96,13 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `wrrdb`.`workout` (
   `workout_id` BIGINT NOT NULL AUTO_INCREMENT,
   `wod_id` BIGINT NOT NULL,
-  `type_name` VARCHAR(45) NULL,
   `seq` INT NULL DEFAULT NULL,
-  `parent_workout_id` BIGINT NOT NULL,
+  `parent_workout_id` BIGINT NULL,
   PRIMARY KEY (`workout_id`),
   INDEX `fk_workout_wod1_idx` (`wod_id` ASC) VISIBLE,
-  INDEX `fk_workout_workout1_idx` (`parent_workout_id` ASC) VISIBLE,
   CONSTRAINT `fk_workout_wod1`
     FOREIGN KEY (`wod_id`)
-    REFERENCES `wrrdb`.`wod` (`wod_id`),
-  CONSTRAINT `fk_workout_workout1`
-    FOREIGN KEY (`parent_workout_id`)
-    REFERENCES `wrrdb`.`workout` (`workout_id`))
+    REFERENCES `wrrdb`.`wod` (`wod_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;

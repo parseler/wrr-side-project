@@ -1,33 +1,32 @@
 package com.gruns.wrr.wod.service;
 
-import com.gruns.wrr.wod.Entity.BoxEntity;
-import com.gruns.wrr.wod.Entity.MovementEntity;
-import com.gruns.wrr.wod.Entity.WodEntity;
-import com.gruns.wrr.wod.Entity.WorkoutEntity;
+import com.gruns.wrr.wod.Entity.*;
 import com.gruns.wrr.wod.dto.*;
-import com.gruns.wrr.wod.dto.type.TypeDto;
-import com.gruns.wrr.wod.repository.BoxRepository;
-import com.gruns.wrr.wod.repository.MovementRepository;
-import com.gruns.wrr.wod.repository.WodRepository;
-import com.gruns.wrr.wod.repository.WorkoutRepository;
+import com.gruns.wrr.wod.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class WodServiceImpl implements WodService {
 
     private final MovementRepository movementRepository;
     private final BoxRepository boxRepository;
+    private final TypeRepository typeRepository;
     private final WodRepository wodRepository;
     private final WorkoutRepository workoutRepository;
+    private final WorkoutTypeRepository workoutTypeRepository;
 
-    public WodServiceImpl(MovementRepository movementRepository, BoxRepository boxRepository, WodRepository wodRepository, WorkoutRepository workoutRepository) {
+    public WodServiceImpl(MovementRepository movementRepository, BoxRepository boxRepository, TypeRepository typeRepository, WodRepository wodRepository, WorkoutRepository workoutRepository, WorkoutTypeRepository workoutTypeRepository) {
         this.movementRepository = movementRepository;
         this.boxRepository = boxRepository;
+        this.typeRepository = typeRepository;
         this.wodRepository = wodRepository;
         this.workoutRepository = workoutRepository;
+        this.workoutTypeRepository = workoutTypeRepository;
     }
 
     @Override
@@ -65,6 +64,21 @@ public class WodServiceImpl implements WodService {
     }
 
     @Override
+    public List<TypeDto> getTypeList() {
+        List<TypeEntity> typeEntityList = typeRepository.findAll();
+
+        List<TypeDto> list = new ArrayList<>();
+        for (TypeEntity typeEntity : typeEntityList) {
+            TypeDto typeDto = TypeDto.builder()
+                    .typeId(typeEntity.getTypeId())
+                    .typeName(typeEntity.getTypeName())
+                    .build();
+            list.add(typeDto);
+        }
+        return list;
+    }
+
+    @Override
     public void saveWod(WodDto wodDto) {
         WodEntity wodEntity = WodEntity
                 .builder()
@@ -76,32 +90,44 @@ public class WodServiceImpl implements WodService {
                 .description(wodDto.getDescription())
                 .build();
 
-        wodRepository.save(wodEntity);
-
-        Long wodId = wodEntity.getWodId();
+        WodEntity savedWodEntity = wodRepository.save(wodEntity);
+        Long wodId = savedWodEntity.getWodId();
 
         for (WorkoutDto workoutDto : wodDto.getWorkouts()) {
             workoutDto.setWodId(wodId);
-            saveWorkOut(workoutDto);
+            saveWorkout(workoutDto);
         }
     }
 
-    @Override
-    public void saveWorkOut(WorkoutDto workoutDto) {
+    private void saveWorkout(WorkoutDto workoutDto) {
         WorkoutEntity workoutEntity = WorkoutEntity
                 .builder()
                 .workoutId(workoutDto.getWorkoutId())
                 .wodId(workoutDto.getWodId())
                 .seq(workoutDto.getSeq())
-                .typeName(workoutDto.getType().getWorkoutType())
                 .parentWorkoutId(workoutDto.getParentWorkoutId())
                 .build();
 
-        workoutRepository.save(workoutEntity);
+        WorkoutEntity savedWorkoutEntity = workoutRepository.save(workoutEntity);
 
-        long workoutId = workoutEntity.getWorkoutId();
-        TypeDto typeDto = workoutDto.getType();
+        long workoutId = savedWorkoutEntity.getWorkoutId();
+        WorkoutTypeDto workoutTypeDto = workoutDto.getWorkoutType();
+        workoutTypeDto.setWorkoutId(workoutId);
+        saveWorkoutType(workoutTypeDto);
+    }
 
+    private void saveWorkoutType(WorkoutTypeDto workoutTypeDto) {
+        WorkoutTypeEntity workoutTypeEntity = WorkoutTypeEntity
+                .builder()
+                .workoutTypeId(workoutTypeDto.getWorkoutTypeId())
+                .workoutId(workoutTypeDto.getWorkoutId())
+                .typeId(workoutTypeDto.getTypeId())
+                .round(workoutTypeDto.getRound())
+                .timeCap(workoutTypeDto.getTimeCap())
+                .onTime(workoutTypeDto.getOnTIme())
+                .offTime(workoutTypeDto.getOffTIme())
+                .build();
 
+        workoutTypeRepository.save(workoutTypeEntity);
     }
 }

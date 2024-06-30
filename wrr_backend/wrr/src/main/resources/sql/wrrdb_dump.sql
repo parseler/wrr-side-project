@@ -1,5 +1,12 @@
 use wrrdb;
 
+INSERT INTO `wrrdb`.`type` (`type_name`)
+VALUES
+('AMRAP'),
+('RFT'),
+('OnOff'),
+('EMOM');
+
 INSERT INTO `wrrdb`.`box` (`box_name`)
 VALUES
 ('Ultimate Training'),
