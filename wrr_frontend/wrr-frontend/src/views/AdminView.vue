@@ -78,7 +78,7 @@ const addMovement = (index) => {
     weightUnit: "",
     weightMale: 0,
     weightFemale: 0,
-    synchronized: 0,
+    synchro: 0,
     seq: 0,
   };
 

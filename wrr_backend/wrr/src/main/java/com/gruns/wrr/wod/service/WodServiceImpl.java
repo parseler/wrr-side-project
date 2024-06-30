@@ -19,14 +19,16 @@ public class WodServiceImpl implements WodService {
     private final WodRepository wodRepository;
     private final WorkoutRepository workoutRepository;
     private final WorkoutTypeRepository workoutTypeRepository;
+    private final WorkoutMovementRepository workoutMovementRepository;
 
-    public WodServiceImpl(MovementRepository movementRepository, BoxRepository boxRepository, TypeRepository typeRepository, WodRepository wodRepository, WorkoutRepository workoutRepository, WorkoutTypeRepository workoutTypeRepository) {
+    public WodServiceImpl(MovementRepository movementRepository, BoxRepository boxRepository, TypeRepository typeRepository, WodRepository wodRepository, WorkoutRepository workoutRepository, WorkoutTypeRepository workoutTypeRepository, WorkoutMovementRepository workoutMovementRepository) {
         this.movementRepository = movementRepository;
         this.boxRepository = boxRepository;
         this.typeRepository = typeRepository;
         this.wodRepository = wodRepository;
         this.workoutRepository = workoutRepository;
         this.workoutTypeRepository = workoutTypeRepository;
+        this.workoutMovementRepository = workoutMovementRepository;
     }
 
     @Override
@@ -114,6 +116,30 @@ public class WodServiceImpl implements WodService {
         WorkoutTypeDto workoutTypeDto = workoutDto.getWorkoutType();
         workoutTypeDto.setWorkoutId(workoutId);
         saveWorkoutType(workoutTypeDto);
+
+        for (WorkoutMovementDto workoutMovementDto : workoutDto.getWorkoutMovements()) {
+            workoutMovementDto.setWorkoutId(workoutId);
+            saveWorkoutMovement(workoutMovementDto);
+        }
+    }
+
+    private void saveWorkoutMovement(WorkoutMovementDto workoutMovementDto) {
+        WorkoutMovementEntity workoutMovementEntity = WorkoutMovementEntity
+                .builder()
+                .workoutMovementId(workoutMovementDto.getWorkoutMovementId())
+                .movementId(workoutMovementDto.getMovementId())
+                .workoutId(workoutMovementDto.getWorkoutId())
+                .repsUnit(workoutMovementDto.getRepsUnit())
+                .repsMale(workoutMovementDto.getRepsMale())
+                .repsFemale(workoutMovementDto.getRepsFemale())
+                .weightUnit(workoutMovementDto.getWeightUnit())
+                .weightMale(workoutMovementDto.getWeightMale())
+                .weightFemale(workoutMovementDto.getWeightFemale())
+                .seq(workoutMovementDto.getSeq())
+                .synchro(workoutMovementDto.getSynchro())
+                .build();
+
+        workoutMovementRepository.save(workoutMovementEntity);
     }
 
     private void saveWorkoutType(WorkoutTypeDto workoutTypeDto) {
