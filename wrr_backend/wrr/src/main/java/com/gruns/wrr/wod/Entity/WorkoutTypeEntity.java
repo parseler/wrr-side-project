@@ -1,22 +1,27 @@
-package com.gruns.wrr.wod.Entity.type;
+package com.gruns.wrr.wod.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 
 @Entity
 @Getter
-@Table(name = "type_onoff")
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class TypeOnOffEntity {
+@Table(name = "workout_type")
+public class WorkoutTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer typeOnoffId;
+    private Long workoutTypeId;
 
     private long workoutId;
+    private int typeId;
     private int round;
     private Time timeCap;
     private Time onTime;
