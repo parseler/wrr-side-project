@@ -1,6 +1,11 @@
 <script setup>
-import { getBoxList, getMovementList, getWorkoutTypeList, saveWod } from "@/api/wod";
-import { onMounted, ref } from "vue";
+import { saveWod } from "@/api/wod";
+import { useWodStore } from "@/stores/wodStore";
+import { storeToRefs } from "pinia";
+import { ref } from "vue";
+
+const wodStore = useWodStore();
+const { movementList, boxList, workoutTypeList } = storeToRefs(wodStore);
 
 const wod = ref({
   wodId: 0,
@@ -12,38 +17,8 @@ const wod = ref({
   workouts: [],
 });
 
-const movementList = ref([]);
-const boxList = ref([]);
-const workoutTypeList = ref([]);
 const repsUnitOptions = ["rep", "m", "km", "cal"];
 const weightUnitOptions = ["kg", "lb"];
-
-onMounted(async () => {
-  getMovementList(
-    (response) => {
-      movementList.value = response.data;
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  getBoxList(
-    (response) => {
-      boxList.value = response.data;
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  getWorkoutTypeList(
-    (response) => {
-      workoutTypeList.value = response.data;
-    },
-    (error) => {
-      console.log(error);
-    }
-  )
-});
 
 const addWorkout = () => {
   const workout = {
@@ -146,7 +121,8 @@ const findByTypeId = (typeId) => {
           <div class="form-group">
             <label for="workoutType">Workout Type</label>
             <select name="workoutType" id="workoutType" v-model="workout.workoutType.typeId">
-              <option :value="type.typeId" v-for="(type, index) in workoutTypeList" :key="type.typeId">{{ type.typeName }}</option>
+              <option :value="type.typeId" v-for="(type, index) in workoutTypeList" :key="type.typeId">{{ type.typeName
+                }}</option>
             </select>
           </div>
           <div v-if="findByTypeId(workout.workoutType.typeId) === 'EMOM'">
@@ -156,7 +132,8 @@ const findByTypeId = (typeId) => {
             </div>
             <div class="form-group">
               <label for="timeCap">Time Cap (HH:MM:SS)</label>
-              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap"
+                placeholder="HH:MM:SS" />
             </div>
           </div>
           <div v-if="findByTypeId(workout.workoutType.typeId) === 'RFT'">
@@ -166,13 +143,15 @@ const findByTypeId = (typeId) => {
             </div>
             <div class="form-group">
               <label for="timeCap">Time Cap (HH:MM:SS)</label>
-              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap"
+                placeholder="HH:MM:SS" />
             </div>
           </div>
           <div v-if="findByTypeId(workout.workoutType.typeId) === 'AMRAP'">
             <div class="form-group">
               <label for="timeCap">Time Cap (HH:MM:SS)</label>
-              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap"
+                placeholder="HH:MM:SS" />
             </div>
           </div>
           <div v-if="findByTypeId(workout.workoutType.typeId) === 'OnOff'">
@@ -182,15 +161,18 @@ const findByTypeId = (typeId) => {
             </div>
             <div class="form-group">
               <label for="timeCap">Time Cap (HH:MM:SS)</label>
-              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap" placeholder="HH:MM:SS" />
+              <input v-model="workout.workoutType.timeCap" type="text" name="timeCap" id="timeCap"
+                placeholder="HH:MM:SS" />
             </div>
             <div class="form-group">
               <label for="onTime">On Time</label>
-              <input v-model="workout.workoutType.onTime" type="text" name="onTime" id="onTime" placeholder="HH:MM:SS" />
+              <input v-model="workout.workoutType.onTime" type="text" name="onTime" id="onTime"
+                placeholder="HH:MM:SS" />
             </div>
             <div class="form-group">
               <label for="offTime">Off Time</label>
-              <input v-model="workout.workoutType.offTime" type="text" name="offTime" id="offTime" placeholder="HH:MM:SS" />
+              <input v-model="workout.workoutType.offTime" type="text" name="offTime" id="offTime"
+                placeholder="HH:MM:SS" />
             </div>
           </div>
 
