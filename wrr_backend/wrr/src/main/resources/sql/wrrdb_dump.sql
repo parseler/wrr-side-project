@@ -14,6 +14,7 @@ VALUES
 
 INSERT INTO `wrrdb`.`movement` (`movement_name`)
 VALUES 
+('Rest'),
 ('AbMat Sit-up'),
 ('Air Squat'),
 ('Back Scale'),

@@ -66,7 +66,7 @@ onMounted(() => {
             </p>
           </div>
         </div>
-        <div class="mt-6 block font-sans text-2xl text-white font-bold leading-snug tracking-normal antialiased">
+        <div v-if="wod.description" class="mt-6 block font-sans text-2xl text-white font-bold leading-snug tracking-normal antialiased">
           * {{ wod.description }}
         </div>
       </div>
