@@ -1,13 +1,13 @@
 package com.gruns.wrr.wod.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @ToString
 public class WorkoutDto {
     private long workoutId;

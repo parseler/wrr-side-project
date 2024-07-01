@@ -81,6 +81,87 @@ public class WodServiceImpl implements WodService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public WodDto getRandomWod() {
+
+        WodEntity wodEntity = wodRepository.findRandomWod();
+
+        long wodId = wodEntity.getWodId();
+        List<WorkoutEntity> workoutEntityList = workoutRepository.findByWodIdOrderBySeqAsc(wodId);
+
+        List<WorkoutDto> workoutDtoList = new ArrayList<>();
+
+        for (WorkoutEntity workoutEntity : workoutEntityList) {
+            long workoutId = workoutEntity.getWorkoutId();
+            WorkoutTypeDto workoutTypeDto = makeWorkoutType(workoutId);
+            List<WorkoutMovementDto> workoutMovementDtoList = makeWorkoutMovements(workoutId);
+
+            WorkoutDto workoutDto = WorkoutDto
+                    .builder()
+                    .workoutId(workoutId)
+                    .parentWorkoutId(workoutEntity.getParentWorkoutId())
+                    .workoutType(workoutTypeDto)
+                    .workoutMovements(workoutMovementDtoList)
+                    .seq(workoutEntity.getSeq())
+                    .wodId(wodId)
+                    .build();
+            workoutDtoList.add(workoutDto);
+        }
+
+        return WodDto
+                .builder()
+                .wodId(wodId)
+                .wodName(wodEntity.getWodName())
+                .boxId(wodEntity.getBoxId())
+                .description(wodEntity.getDescription())
+                .likes(wodEntity.getLikes())
+                .teamSize(wodEntity.getTeamSize())
+                .workouts(workoutDtoList)
+                .build();
+    }
+
+    private List<WorkoutMovementDto> makeWorkoutMovements(long workoutId) {
+        List<WorkoutMovementEntity> workoutMovementEntities = workoutMovementRepository.findByWorkoutIdOrderBySeqAsc(workoutId);
+
+        List<WorkoutMovementDto> workoutMovementDtoList = new ArrayList<>();
+
+        for (WorkoutMovementEntity workoutMovementEntity : workoutMovementEntities) {
+            WorkoutMovementDto workoutMovementDto = WorkoutMovementDto
+                    .builder()
+                    .workoutMovementId(workoutMovementEntity.getWorkoutMovementId())
+                    .workoutId(workoutId)
+                    .movementId(workoutMovementEntity.getMovementId())
+                    .repsUnit(workoutMovementEntity.getRepsUnit())
+                    .repsMale(workoutMovementEntity.getRepsMale())
+                    .repsFemale(workoutMovementEntity.getRepsFemale())
+                    .weightUnit(workoutMovementEntity.getWeightUnit())
+                    .weightMale(workoutMovementEntity.getWeightMale())
+                    .weightFemale(workoutMovementEntity.getWeightFemale())
+                    .seq(workoutMovementEntity.getSeq())
+                    .synchro(workoutMovementEntity.getSynchro())
+                    .build();
+            workoutMovementDtoList.add(workoutMovementDto);
+        }
+
+        return workoutMovementDtoList;
+    }
+
+    private WorkoutTypeDto makeWorkoutType(long workoutId) {
+
+        WorkoutTypeEntity workoutTypeEntity = workoutTypeRepository.findByWorkoutId(workoutId);
+        return WorkoutTypeDto
+                .builder()
+                .workoutTypeId(workoutTypeEntity.getWorkoutTypeId())
+                .workoutId(workoutId)
+                .typeId(workoutTypeEntity.getTypeId())
+                .round(workoutTypeEntity.getRound())
+                .timeCap(workoutTypeEntity.getTimeCap())
+                .onTime(workoutTypeEntity.getOnTime())
+                .offTime(workoutTypeEntity.getOffTime())
+                .build();
+    }
+
+    @Override
     public void saveWod(WodDto wodDto) {
         WodEntity wodEntity = WodEntity
                 .builder()
@@ -100,15 +181,6 @@ public class WodServiceImpl implements WodService {
             saveWorkout(workoutDto);
         }
     }
-
-    @Override
-    public WodDto getRandomWod() {
-
-        WodEntity wodEntity = wodRepository.findRandomWod();
-        System.out.println("wodEntity = " + wodEntity);
-        return null;
-    }
-
     private void saveWorkout(WorkoutDto workoutDto) {
         WorkoutEntity workoutEntity = WorkoutEntity
                 .builder()
@@ -158,8 +230,8 @@ public class WodServiceImpl implements WodService {
                 .typeId(workoutTypeDto.getTypeId())
                 .round(workoutTypeDto.getRound())
                 .timeCap(workoutTypeDto.getTimeCap())
-                .onTime(workoutTypeDto.getOnTIme())
-                .offTime(workoutTypeDto.getOffTIme())
+                .onTime(workoutTypeDto.getOnTime())
+                .offTime(workoutTypeDto.getOffTime())
                 .build();
 
         workoutTypeRepository.save(workoutTypeEntity);

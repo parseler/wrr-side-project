@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WorkoutTypeRepository extends JpaRepository<WorkoutTypeEntity, Long> {
-
+    WorkoutTypeEntity findByWorkoutId(long workoutId);
 }
