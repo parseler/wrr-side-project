@@ -57,8 +57,8 @@ onMounted(() => {
 
           <div v-for="(movement, index) in workout.workoutMovements" :key="movement.workoutMovementId">
             <p class="mb-1 block font-sans text-2xl font-semibold leading-relaxed antialiased text-center">
-              {{ movement.repsMale }}
-              <span v-if="movement.repsMale !== movement.repsFemale">/{{ movement.repsFemale }}</span>
+              {{ movement.repsMale }}<span v-if="movement.repsMale !== movement.repsFemale">/{{ movement.repsFemale
+                }}</span>
               <span v-if="movement.repsUnit !== 'rep'">{{ movement.repsUnit }}</span>
               {{ movementList.find(move => move.movementId === movement.movementId).movementName }}
               <span v-if="movement.weightMale !== 0">{{ movement.weightMale }}/{{ movement.weightFemale }} {{
