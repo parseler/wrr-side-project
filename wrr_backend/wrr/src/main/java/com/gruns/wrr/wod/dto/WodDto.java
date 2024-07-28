@@ -6,14 +6,10 @@ import java.util.List;
 
 @Getter
 @Builder
-@AllArgsConstructor
-@ToString
 public class WodDto {
-    private long wodId;
-    private int boxId;
-    private String wodName;
-    private int teamSize;
-    private int likes;
+    private String id;
+    private String name;
+    private String box;
     private String description;
-    private List<WorkoutDto> workouts;
+    private int likes;
 }
